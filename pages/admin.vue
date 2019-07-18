@@ -1,16 +1,17 @@
 <template>
   <div class="admin">
     <CmsForm></CmsForm>
-    <div class="cms-form-view">
-    </div>
+    <CmsFormView></CmsFormView>
   </div>
 </template>
 
 <script>
   import CmsForm from '~/components/admin/cms-form.vue'
+  import CmsFormView from '~/components/admin/cms-form-view.vue'
   export default {
     components:{
-      CmsForm
+      CmsForm,
+      CmsFormView
     }
   }
 </script>
