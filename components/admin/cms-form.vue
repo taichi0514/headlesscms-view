@@ -74,7 +74,7 @@
     padding: 16px 20px;
     width: 100%;
     border:none ;
-    font-size: 100%;
+    @include fontsize(15);
   }
 
   textarea{
@@ -83,5 +83,7 @@
     width: 100%;
     border:none ;
     font-size: 100%;
+    height: 280px;
+    @include fontsize(14);
   }
 </style>

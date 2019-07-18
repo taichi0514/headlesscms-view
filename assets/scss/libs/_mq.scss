@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+$breakpoints: (
+        'sm': 'screen and (min-width: 400px)',
+        'md': 'screen and (min-width: 768px)',
+        'l': 'screen and (min-width: 940px)',
+        'lg': 'screen and (min-width: 1000px)',
+        'llg': 'screen and (min-width: 1100px)',
+        'x': 'screen and (min-width: 1200px)',
+        'xl': 'screen and (min-width: 1360px)',
+        'xll': 'screen and (min-width: 1920px)'
+) !default;
+
+@mixin mq($breakpoint: md) {
+  @media #{map-get($breakpoints, $breakpoint)} {
+    @content;
+  }
+};
+
+
+
+.for-sp {
+  @include mq(md) {
+    display: none;
+  }
+}
+
+.for-pc {
+  display: none;
+  @include mq(md) {
+    display: inline-block;
+  }
+}

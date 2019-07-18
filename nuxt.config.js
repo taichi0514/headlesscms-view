@@ -27,6 +27,7 @@ export default {
   ** Global CSS
   */
   css: [
+    'normalize.css'
   ],
 
   /*
@@ -42,7 +43,14 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
+    '@nuxtjs/style-resources',
   ],
+  // 読みませたいscssファイルを指定します。
+  styleResources: {
+    sass: [
+      '~/assets/scss/libs/*.scss','~/assets/scss/libs/_mq.scss'
+    ]
+  },
   /*
   ** Axios module configuration
   */
