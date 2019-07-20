@@ -16,8 +16,4 @@ export const mutations = {
   }
 }
 
-// export default {
-//   actions,
-//   mutations,
-//   getters
-// }
+

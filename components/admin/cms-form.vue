@@ -7,7 +7,8 @@
 
     <fieldset>
       <legend>本文</legend>
-      <textarea type="text" placeholder="本文" :value="body" @input="$store.commit('updateBody',$event.target.value)"></textarea>
+      <textarea type="text" placeholder="本文" :value="body" @input="$store.commit('updateBody',$event.target.value)"
+                @drop.prevent="handleDrop"></textarea>
     </fieldset>
 
     <fieldset>
@@ -46,7 +47,8 @@
 
 
 <script>
-  import { mapState, mapMutations } from 'vuex'
+  import {mapState, mapMutations} from 'vuex'
+  import $axios from 'axios'
 
   export default {
     computed: {
@@ -60,7 +62,50 @@
         'updateMessage',
         'updateBody'
 
-      ])
+      ]),
+      handleDrop: function (event) {
+        const files = event.dataTransfer.files
+        if (files.length > 0) {
+          const formData = new FormData()
+          for (const file of files) {
+            if (file.type.match('image.*')) {
+              formData.append('note', file)
+            }
+          }
+          console.log(files, event.srcElement);
+          this.uploud(files, event.srcElement);
+        }
+      },
+      uploud: function (f, el) {
+        const formData = new FormData();
+        const config = {
+          headers: {'Access-Control-Allow-Origin': '*','Content-Type': 'multipart/form-data'}
+        }
+        formData.append('file', f);
+        $axios.get('http://localhost:8000/api/posts/all', formData,config)
+          .then(res => {
+            console.log("おｋ");
+          }).catch( error => {
+          // いずれかのreadFileでエラーがあった場合の処理
+          console.log( error );
+          console.log( "しっぱい" );
+        });
+        ;
+        // success: function (data) {
+        //   console.log(data);
+        //   const textarea = document.querySelector('#' + el.id);
+        //   let sentence = textarea.value;
+        //   const len = sentence.length;
+        //   //カーソルの位置を取得
+        //   const pos = textarea.selectionStart;
+        //
+        //   const before = sentence.substr(0, pos);
+        //   const word = '<img src="' + data.path + '"/>';
+        //   const after = sentence.substr(pos, len);
+        //   sentence = before + word + after;
+        //   textarea.value = sentence;
+        // }
+      }
     },
   }
 </script>
