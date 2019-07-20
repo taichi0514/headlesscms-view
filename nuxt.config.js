@@ -34,7 +34,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~/plugins/axios.js'
+    // '~/plugins/axios.js'
   ],
 
   env: {
@@ -60,10 +60,14 @@ export default {
   /*
   ** Axios module configuration
   */
-  proxy: {
-    // '/hog': process.env.baseUrl
-  },
   axios: {
+    // See https://github.com/nuxt-community/axios-module#options
+    // baseURL:'https://headlesscms-api.herokuapp.com',
+    browserBaseURL:'https://headlesscms-api.herokuapp.com',
+    https: true,
+    proxy: {
+      '/api': {target: 'https://headlesscms-api.herokuapp.com/api/posts/all', pathRewrite: {'^/api': ''}}
+    }
   },
 
 

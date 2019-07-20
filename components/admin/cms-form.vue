@@ -48,7 +48,6 @@
 
 <script>
   import {mapState, mapMutations} from 'vuex'
-  import $axios from 'axios'
 
   export default {
     computed: {
@@ -80,17 +79,26 @@
         const formData = new FormData();
         const config = {
           headers: {'Access-Control-Allow-Origin': '*','Content-Type': 'multipart/form-data'}
-        }
+        };
+        const url = "/api/posts/all";
         formData.append('file', f);
-        $axios.get('http://localhost:8000/api/posts/all', formData,config)
+        this.$axios.get(url, formData,config)
           .then(res => {
             console.log("おｋ");
+            console.log(res);
           }).catch( error => {
           // いずれかのreadFileでエラーがあった場合の処理
           console.log( error );
           console.log( "しっぱい" );
         });
-        ;
+        //  const xhr = new XMLHttpRequest();
+        // xhr.open("GET", "https://headlesscms-api.herokuapp.com/api/posts/all", true);
+        // xhr.setRequestHeader( 'Access-Control-Allow-Origin', '*');
+        // xhr.send();
+        // xhr.addEventListener('load', function(result){
+        //   console.log("hoge");
+        //   console.log(result);
+        // });
         // success: function (data) {
         //   console.log(data);
         //   const textarea = document.querySelector('#' + el.id);
