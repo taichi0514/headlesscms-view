@@ -7,13 +7,13 @@
 
     <fieldset>
       <legend>本文</legend>
-      <textarea type="text" placeholder="本文" :value="body" @input="$store.commit('updateBody',$event.target.value)"
+      <textarea type="text" name="file" placeholder="本文" :value="body" @input="$store.commit('updateBody',$event.target.value)"
                 @drop.prevent="handleDrop"></textarea>
     </fieldset>
 
     <fieldset>
       <legend>サムネイル</legend>
-      <form action="/api/upload" method="post" enctype="multipart/form-data">
+      <form action="http://localhost:8000/api/upload" method="post" enctype="multipart/form-data">
         <input type="file" name="file">
         <button type="submit">保存</button>
       </form>
@@ -21,7 +21,7 @@
 
     <fieldset>
       <legend>OGP画像</legend>
-      <form action="/api/upload" method="post" enctype="multipart/form-data">
+      <form action="http://localhost:8000/api/upload" method="post" enctype="multipart/form-data">
         <input type="file" name="file">
         <button type="submit">保存</button>
       </form>
@@ -63,58 +63,42 @@
 
       ]),
       handleDrop: function (event) {
-        const files = event.dataTransfer.files
-        if (files.length > 0) {
-          const formData = new FormData()
-          for (const file of files) {
-            if (file.type.match('image.*')) {
-              formData.append('note', file)
-            }
-          }
-          console.log(files, event.srcElement);
-          this.uploud(files, event.srcElement);
+        event.preventDefault();
+        const files = event.dataTransfer.files;
+        for (var i = 0; i < files.length; i++) {
+          // 一件ずつアップロード
+          this.uploud(files[i], event.srcElement);
+          // console.log(files);
         }
       },
       uploud: function (f, el) {
-        const formData = new FormData();
-        const config = {
-          headers: {'Access-Control-Allow-Origin': '*','Content-Type': 'multipart/form-data'}
-        };
-        const url = "/api/posts/all";
+        // console.log(f);
+        let formData = new FormData();
         formData.append('file', f);
-        this.$axios.get(url, formData,config)
-          .then(res => {
-            console.log("おｋ");
-            console.log(res);
-          }).catch( error => {
-          // いずれかのreadFileでエラーがあった場合の処理
-          console.log( error );
-          console.log( "しっぱい" );
-        });
-        //  const xhr = new XMLHttpRequest();
-        // xhr.open("GET", "https://headlesscms-api.herokuapp.com/api/posts/all", true);
-        // xhr.setRequestHeader( 'Access-Control-Allow-Origin', '*');
-        // xhr.send();
-        // xhr.addEventListener('load', function(result){
-        //   console.log("hoge");
-        //   console.log(result);
-        // });
-        // success: function (data) {
-        //   console.log(data);
-        //   const textarea = document.querySelector('#' + el.id);
-        //   let sentence = textarea.value;
-        //   const len = sentence.length;
-        //   //カーソルの位置を取得
-        //   const pos = textarea.selectionStart;
-        //
-        //   const before = sentence.substr(0, pos);
-        //   const word = '<img src="' + data.path + '"/>';
-        //   const after = sentence.substr(pos, len);
-        //   sentence = before + word + after;
-        //   textarea.value = sentence;
-        // }
+        console.log(formData.get('file'));
+        const config = {
+          headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'multipart/form-data'}
+        };
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://localhost:8000/api/upload");
+        xhr.send(formData);
+        xhr.onload = ()=> {
+          console.log(xhr.response);
+        };
+        // this.$axios.post('/api/upload', formData, config)
+        //   .then(res => {
+        //     console.log(formData.get('text'));
+        //     console.log("おｋ");
+        //     console.log(res);
+        //   }).catch(error => {
+        //   // いずれかのreadFileでエラーがあった場合の処理
+        //   console.log(formData.get('text'));
+        //   console.log(error);
+        //   console.log("しっぱい");
+        // })
       }
-    },
+    }
+    ,
   }
 </script>
 

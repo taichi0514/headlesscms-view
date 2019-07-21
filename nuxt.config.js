@@ -65,8 +65,10 @@ export default {
     // baseURL:'https://headlesscms-api.herokuapp.com',
     browserBaseURL:'https://headlesscms-api.herokuapp.com',
     https: true,
+    xsrfHeaderName: 'X-CSRF-Token',
+    withCredentials: true,
     proxy: {
-      '/api': {target: 'https://headlesscms-api.herokuapp.com/api/posts/all', pathRewrite: {'^/api': ''}}
+      '/api': {target: 'https://headlesscms-api.herokuapp.com', pathRewrite: {'^/api': ''}}
     }
   },
 
