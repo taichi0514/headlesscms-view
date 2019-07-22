@@ -7,8 +7,9 @@
 
     <fieldset>
       <legend>本文</legend>
-      <textarea type="text" name="file" placeholder="本文" :value="body" @input="$store.commit('updateBody',$event.target.value)"
-                @drop.prevent="handleDrop"></textarea>
+      <textarea type="text" name="file" placeholder="本文" :value="body"
+                @input="$store.commit('updateBody',$event.target.value)"
+                @drop.prevent="handleDrop" id="text"></textarea>
     </fieldset>
 
     <fieldset>
@@ -48,7 +49,7 @@
 
 <script>
   import {mapState, mapMutations} from 'vuex'
-
+  import marked from 'marked';
   export default {
     computed: {
       ...mapState([
@@ -65,10 +66,9 @@
       handleDrop: function (event) {
         event.preventDefault();
         const files = event.dataTransfer.files;
-        for (var i = 0; i < files.length; i++) {
+        for (let i = 0; i < files.length; i++) {
           // 一件ずつアップロード
           this.uploud(files[i], event.srcElement);
-          // console.log(files);
         }
       },
       uploud: function (f, el) {
@@ -77,25 +77,26 @@
         formData.append('file', f);
         console.log(formData.get('file'));
         const config = {
-          headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'multipart/form-data'}
+          headers: {'Content-Type': 'multipart/form-data'}
         };
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", "http://localhost:8000/api/upload");
-        xhr.send(formData);
-        xhr.onload = ()=> {
-          console.log(xhr.response);
-        };
-        // this.$axios.post('/api/upload', formData, config)
-        //   .then(res => {
-        //     console.log(formData.get('text'));
-        //     console.log("おｋ");
-        //     console.log(res);
-        //   }).catch(error => {
-        //   // いずれかのreadFileでエラーがあった場合の処理
-        //   console.log(formData.get('text'));
-        //   console.log(error);
-        //   console.log("しっぱい");
-        // })
+        this.$axios.$post('https://headlesscms-api.herokuapp.com/api/upload', formData, config)
+        .then(res => {
+          console.log(res.img);
+          var textarea = document.querySelector('#' + el.id);
+          var sentence = textarea.value;
+          var len = sentence.length;
+          var pos = textarea.selectionStart;
+
+          var before = sentence.substr(0, pos);
+          var word = '<img src="' + res.img + '"/>';
+          var after = sentence.substr(pos, len);
+
+          sentence = before + word + after;
+
+          textarea.value = sentence;
+
+          console.log(res.img);
+        })
       }
     }
     ,

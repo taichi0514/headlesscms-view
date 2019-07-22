@@ -1,20 +1,25 @@
 <template>
   <div class="cms-form-view">
       <h2>{{title}}</h2>
-    <p> {{body}}</p>
+    <p v-html="compiledMarkdown">
+    </p>
   </div>
 </template>
 
 
 <script>
   import { mapState } from 'vuex'
-
+  import marked from 'marked';
   export default {
-    computed: {
+  computed: {
       ...mapState([
         'title',
         'body'
-      ])
+      ]),
+      compiledMarkdown: function () {
+        marked.setOptions({breaks : true})
+        return marked(this.$store.state.body)
+      }
     }
   }
 </script>

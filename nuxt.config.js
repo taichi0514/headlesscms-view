@@ -61,15 +61,6 @@ export default {
   ** Axios module configuration
   */
   axios: {
-    // See https://github.com/nuxt-community/axios-module#options
-    // baseURL:'https://headlesscms-api.herokuapp.com',
-    browserBaseURL:'https://headlesscms-api.herokuapp.com',
-    https: true,
-    xsrfHeaderName: 'X-CSRF-Token',
-    withCredentials: true,
-    proxy: {
-      '/api': {target: 'https://headlesscms-api.herokuapp.com', pathRewrite: {'^/api': ''}}
-    }
   },
 
 
