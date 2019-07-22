@@ -5,6 +5,7 @@
 export const state = () => ({
   title: "",
   body: "",
+  ArticleList:"",
 });
 
 export const mutations = {
@@ -13,6 +14,9 @@ export const mutations = {
   },
   updateBody(state, newBody) {
     state.body = newBody
+  },
+  getArticleList(state,getArticleList){
+    state.ArticleList = getArticleList;
   }
 }
 

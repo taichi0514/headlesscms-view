@@ -6,8 +6,8 @@
 </template>
 
 <script>
-  import CmsForm from '~/components/admin/cms-form.vue'
-  import CmsFormView from '~/components/admin/cms-form-view.vue'
+  import CmsForm from '~/components/admin/post/cms-form.vue'
+  import CmsFormView from '~/components/admin/post/cms-form-view.vue'
   export default {
     components:{
       CmsForm,
