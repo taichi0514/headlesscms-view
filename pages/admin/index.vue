@@ -1,5 +1,9 @@
 <template>
   <div class="admin">
+    <header>
+      <button class="Articlepost" @click="ViewReturn">トップページに戻る</button>
+      <button class="Articlepost" @click="PostReturn">新規記事投稿</button>
+    </header>
       <ul class="ArticleListWrapp">
         <li class="ArticleList" v-for="(item,index) in ArticleList" :key="index">
           <nuxt-link class="ArticleListLink" :to="'admin/edit/' + item.id">
@@ -42,11 +46,39 @@
           this.ArticleList = resdata
           console.log(this.ArticleList)
         })
+    },
+    methods:{
+      ViewReturn: function(){
+        this.$router.push('/')
+      },
+      PostReturn: function(){
+        this.$router.push('/admin/post')
+      },
     }
   }
 </script>
 
 <style scoped lang="scss">
+
+  header{
+    padding: 20px;
+    display: flex;
+    justify-content:space-between;
+  }
+  .Articlepost{
+    appearance: none;
+    border: none;
+    background-color: #a9a9b3;
+    border-radius: 5px;
+    padding: 12px 14px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #fff;
+    transition: background-color 1s,color 1s;
+  }
+  .Articlepost:hover{
+    background-color: darken(#a9a9b3,20%);
+  }
 
   .ArticleListWrapp {
     max-width: 960px;
