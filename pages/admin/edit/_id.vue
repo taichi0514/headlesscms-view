@@ -30,14 +30,12 @@
 
         <fieldset>
           <legend>タグ</legend>
-          <input type="text" placeholder="タグ" v-model="ArticleData.tag"
-                 @input="$store.commit('updateTag',$event.target.value)">
+          <input type="text" placeholder="タグ" v-model="ArticleData.tag">
         </fieldset>
 
         <fieldset>
           <legend>SEOタイトル</legend>
-          <input type="text" placeholder="SEOタイトル" v-model="ArticleData.seo_title"
-                 @input="$store.commit('updateSeoTitle',$event.target.value)">
+          <input type="text" placeholder="SEOタイトル" v-model="ArticleData.seo_title">
         </fieldset>
 
         <fieldset>
