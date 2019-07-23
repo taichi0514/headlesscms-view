@@ -88,7 +88,7 @@
         const config = {
           headers: {'Content-Type': 'multipart/form-data'}
         };
-        this.$axios.$post('https://headlesscms-api.herokuapp.com/api/upload', formData, config)
+        this.$axios.$post('http://localhost:8000/api/upload', formData, config)
           .then(res => {
             const textarea = document.querySelector('#' + el.id);
             let sentence = textarea.value;

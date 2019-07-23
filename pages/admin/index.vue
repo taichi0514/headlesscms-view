@@ -36,15 +36,12 @@
       }
     },
     created() {
-      // https://headlesscms-api.herokuapp.com/api/posts/all
       this.$axios.$get('http://localhost:8000/api/posts/all')
         .then(res => {
-          console.log(res);
           let resdata = res.data.map(res => {
             return res
           })
           this.ArticleList = resdata
-          console.log(this.ArticleList)
         })
     },
     methods:{
