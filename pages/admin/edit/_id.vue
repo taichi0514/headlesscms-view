@@ -1,6 +1,10 @@
 <template>
   <div class="admin">
-    <dialog id="dialog" class="dialog"><div class="dialog_content"><p>更新完了</p><nuxt-link to="/admin" class="Articlepost dialog_link">管理画面に戻る</nuxt-link></div></dialog>
+    <dialog id="dialog" class="dialog">
+      <div class="dialog_content"><p>更新完了</p>
+        <nuxt-link to="/admin" class="Articlepost dialog_link">管理画面に戻る</nuxt-link>
+      </div>
+    </dialog>
     <header>
       <button class="Articlepost" @click="ViewReturn">戻る</button>
       <button class="Articlepost" @click="Articlepost(); DialogShow()">記事更新</button>
@@ -54,6 +58,7 @@
 
 <script>
   import marked from 'marked';
+
   export default {
     data() {
       return {
@@ -124,41 +129,37 @@
         const files = event.target.files;
 
         for (let i = 0; i < files.length; i++) {
-          this.featured_image(files[i]);
+          this.featuredImage(files[i]);
         }
       },
-      featured_image: function (f) {
+      async featuredImage(f) {
         let formData = new FormData();
         formData.append('file', f);
-        formData.append('id', this.$route.params.id);
         const config = {
           headers: {'Content-Type': 'multipart/form-data'}
         };
-        this.$axios.$post('http://localhost:8000/api/posts/featured_image', formData, config)
-          .then(res => {
-            const image = document.getElementById('featured_image');
-            let image_src = image.src;
-            image_src = res;
-          })
+        const res = await this.$axios.$post('http://localhost:8000/api/upload', formData, config)
+        this.ArticleData.featured_image = res.img;
       },
-      ViewReturn: function(){
+      ViewReturn: function () {
         this.$router.push('/admin')
       },
-      DialogShow: function(){
+      DialogShow: function () {
         console.log("hihi")
         const el = document.getElementById('dialog');
         console.log(el)
-        el.setAttribute('open','')
+        el.setAttribute('open', '')
       }
     }
   }
 </script>
 
 <style scoped lang="scss">
-  .admin{
+  .admin {
     position: relative;
   }
-  .dialog{
+
+  .dialog {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -169,28 +170,33 @@
     z-index: 1;
     border: none;
   }
-  .dialog_content{
+
+  .dialog_content {
     position: absolute;
     width: 100%;
     height: 100vh;
     text-align: center;
     z-index: 1;
-    top:50%;
+    top: 50%;
     transform: translateY(-50%);
   }
-  .dialog_content p{
+
+  .dialog_content p {
     @include fontsize(28);
     padding: 40px 0;
   }
-  .dialog_link{
+
+  .dialog_link {
     text-decoration: none;
   }
-  header{
+
+  header {
     padding: 20px;
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
   }
-  .Articlepost{
+
+  .Articlepost {
     appearance: none;
     border: none;
     background-color: #dfdfe3;
@@ -199,12 +205,14 @@
     cursor: pointer;
     font-weight: bold;
     color: #7a8291;
-    transition: background-color 1s,color 1s;
+    transition: background-color 1s, color 1s;
   }
-  .Articlepost:hover{
-    background-color: darken(#dfdfe3,20%);
+
+  .Articlepost:hover {
+    background-color: darken(#dfdfe3, 20%);
     color: #fff;
   }
+
   .cms-form-wrap {
     display: flex;
   }
