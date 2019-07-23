@@ -1,12 +1,12 @@
 <template>
   <div class="admin">
-    <ul>
-      <li class="list" v-for="(item,index) in ArticleList" :key="index">
-        <a :href="'admin/edit/' + item.id">
-          {{item.title}}
-        </a>
-      </li>
-    </ul>
+      <ul class="ArticleListWrapp">
+        <li class="ArticleList" v-for="(item,index) in ArticleList" :key="index">
+          <nuxt-link class="ArticleListLink" :to="'admin/edit/' + item.id">
+            {{item.title}}
+          </nuxt-link>
+        </li>
+      </ul>
   </div>
 </template>
 
@@ -14,6 +14,11 @@
   import {mapState, mapMutations} from 'vuex'
 
   export default {
+    head: {
+      bodyAttrs: {
+        class: 'management'
+      }
+    },
     data() {
       return {
         ArticleList: {
@@ -43,22 +48,30 @@
 
 <style scoped lang="scss">
 
-  * {
-    box-sizing: border-box;
+  .ArticleListWrapp {
+    max-width: 960px;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    padding: 30px 0;
   }
 
-  .admin {
-    display: flex;
+  .ArticleList {
+    display: block;
+    max-width: 100%;
+    background-color: #fff;
+    margin-top: 16px;
   }
 
-  .cms-form {
-    width: 50%;
-    padding: 40px 20px;
+  .ArticleList:first-child {
+    margin-top: 0;
   }
 
-  .cms-form-view {
-    width: 50%;
-    padding: 40px 20px;
+  .ArticleListLink {
+    color: #000;
+    padding: 16px 22px;
+    text-decoration: none;
+    display: block;
   }
 
 

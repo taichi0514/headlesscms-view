@@ -17,6 +17,12 @@ html {
   box-sizing: border-box;
 }
 
+.management {
+  width: 100%;
+  height: 100%;
+  background-color: #dfdfe3;
+}
+
 *,
 *:before,
 *:after {
