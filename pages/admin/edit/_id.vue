@@ -1,56 +1,57 @@
 <template>
   <div class="admin">
-    <div class="cms-form">
-      <p> {{ $route.params }} </p>
-      <p>{{ArticleData}}</p>
-      <fieldset>
-        <legend>タイトル</legend>
-        <input type="text" placeholder="タイトル" v-model="ArticleData.title">
-      </fieldset>
+    <header>
+      <button class="Articlepost" @click="ViewReturn">戻る</button>
+      <button class="Articlepost" @click="Articlepost">記事更新</button>
+    </header>
+    <div class="cms-form-wrap">
+      <div class="cms-form">
+        <fieldset>
+          <legend>タイトル</legend>
+          <input type="text" placeholder="タイトル" v-model="ArticleData.title">
+        </fieldset>
 
-      <fieldset>
-        <legend>本文</legend>
-        <textarea type="text" name="file" placeholder="本文" v-model="ArticleData.body"
-                  @drop.prevent="handleDrop" id="text"></textarea>
-      </fieldset>
+        <fieldset>
+          <legend>本文</legend>
+          <textarea type="text" name="file" placeholder="本文" v-model="ArticleData.body"
+                    @drop.prevent="handleDrop" id="text"></textarea>
+        </fieldset>
 
-      <fieldset>
-        <legend>OGP画像</legend>
-        <img :src=ArticleData.featured_image alt="" id="featured_image">
-        <input type="file" name="file" @change="OgpHandleDrop">
-      </fieldset>
+        <fieldset>
+          <legend>OGP画像</legend>
+          <img :src=ArticleData.featured_image alt="" id="featured_image">
+          <input type="file" name="file" @change="OgpHandleDrop">
+        </fieldset>
 
-      <fieldset>
-        <legend>タグ</legend>
-        <input type="text" placeholder="タグ" v-model="ArticleData.tag"
-               @input="$store.commit('updateTag',$event.target.value)">
-      </fieldset>
+        <fieldset>
+          <legend>タグ</legend>
+          <input type="text" placeholder="タグ" v-model="ArticleData.tag"
+                 @input="$store.commit('updateTag',$event.target.value)">
+        </fieldset>
 
-      <fieldset>
-        <legend>SEOタイトル</legend>
-        <input type="text" placeholder="SEOタイトル" v-model="ArticleData.seo_title"
-               @input="$store.commit('updateSeoTitle',$event.target.value)">
-      </fieldset>
+        <fieldset>
+          <legend>SEOタイトル</legend>
+          <input type="text" placeholder="SEOタイトル" v-model="ArticleData.seo_title"
+                 @input="$store.commit('updateSeoTitle',$event.target.value)">
+        </fieldset>
 
-      <fieldset>
-        <legend>meta-discription</legend>
-        <textarea type="text" placeholder="meta-discription" v-model="ArticleData.meta_description"></textarea>
-      </fieldset>
-      <button @click="Articlepost">post</button>
+        <fieldset>
+          <legend>meta-discription</legend>
+          <textarea type="text" placeholder="meta-discription" v-model="ArticleData.meta_description"></textarea>
+        </fieldset>
+      </div>
+
+      <div class="cms-form-view">
+        <h2>{{ArticleData.title}}</h2>
+        <p v-html="compiledMarkdown"></p>
+      </div>
     </div>
-
-    <div class="cms-form-view">
-      <h2>{{ArticleData.title}}</h2>
-      <p v-html="compiledMarkdown"></p>
-    </div>
-
   </div>
 
 </template>
 
 
 <script>
-  import {mapState, mapMutations} from 'vuex'
   import marked from 'marked';
 
   export default {
@@ -79,10 +80,6 @@
       }
     },
     methods: {
-      ...mapMutations([
-        'updateMessage',
-        'updateBody'
-      ]),
       handleDrop: function (event) {
         event.preventDefault();
         const files = event.dataTransfer.files;
@@ -133,23 +130,46 @@
       featured_image: function (f) {
         let formData = new FormData();
         formData.append('file', f);
-        formData.append('id',this.$route.params.id);
+        formData.append('id', this.$route.params.id);
         const config = {
           headers: {'Content-Type': 'multipart/form-data'}
         };
-        this.$axios.$post('http://localhost:8000/api/posts/featured_image', formData,config)
+        this.$axios.$post('http://localhost:8000/api/posts/featured_image', formData, config)
           .then(res => {
             const image = document.getElementById('featured_image');
             let image_src = image.src;
             image_src = res;
           })
       },
+      ViewReturn: function(){
+        this.$router.push('/admin')
+      }
     }
   }
 </script>
 
 <style scoped lang="scss">
-  .admin {
+  header{
+    padding: 20px;
+    display: flex;
+    justify-content:space-between;
+  }
+  .Articlepost{
+    appearance: none;
+    border: none;
+    background-color: #dfdfe3;
+    border-radius: 5px;
+    padding: 12px 14px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #7a8291;
+    transition: background-color 1s,color 1s;
+  }
+  .Articlepost:hover{
+    background-color: darken(#dfdfe3,20%);
+    color: #fff;
+  }
+  .cms-form-wrap {
     display: flex;
   }
 
