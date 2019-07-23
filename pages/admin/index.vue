@@ -61,6 +61,7 @@
     max-width: 100%;
     background-color: #fff;
     margin-top: 16px;
+    border-radius: 5px;
   }
 
   .ArticleList:first-child {
