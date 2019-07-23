@@ -1,6 +1,6 @@
 <template>
   <div class="cms-form-view">
-      <h2>{{title}}</h2>
+    <h2>{{title}}</h2>
     <p v-html="compiledMarkdown">
     </p>
   </div>
@@ -25,11 +25,5 @@
 </script>
 
 <style scoped lang="scss">
-  h2{
-    margin-top: 60px;
-  }
 
-  p{
-    margin-top: 90px;
-  }
 </style>
