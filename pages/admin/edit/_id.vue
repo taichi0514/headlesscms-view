@@ -1,8 +1,9 @@
 <template>
   <div class="admin">
+    <dialog id="dialog" class="dialog"><div class="dialog_content"><p>更新完了</p><nuxt-link to="/admin" class="Articlepost dialog_link">管理画面に戻る</nuxt-link></div></dialog>
     <header>
       <button class="Articlepost" @click="ViewReturn">戻る</button>
-      <button class="Articlepost" @click="Articlepost">記事更新</button>
+      <button class="Articlepost" @click="Articlepost(); DialogShow()">記事更新</button>
     </header>
     <div class="cms-form-wrap">
       <div class="cms-form">
@@ -53,7 +54,6 @@
 
 <script>
   import marked from 'marked';
-
   export default {
     data() {
       return {
@@ -143,12 +143,48 @@
       },
       ViewReturn: function(){
         this.$router.push('/admin')
+      },
+      DialogShow: function(){
+        console.log("hihi")
+        const el = document.getElementById('dialog');
+        console.log(el)
+        el.setAttribute('open','')
       }
     }
   }
 </script>
 
 <style scoped lang="scss">
+  .admin{
+    position: relative;
+  }
+  .dialog{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    border: none;
+  }
+  .dialog_content{
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    text-align: center;
+    z-index: 1;
+    top:50%;
+    transform: translateY(-50%);
+  }
+  .dialog_content p{
+    @include fontsize(28);
+    padding: 40px 0;
+  }
+  .dialog_link{
+    text-decoration: none;
+  }
   header{
     padding: 20px;
     display: flex;

@@ -34,7 +34,6 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    // '~/plugins/axios.js'
   ],
 
   env: {
@@ -50,6 +49,7 @@ export default {
     '@nuxtjs/proxy',
     '@nuxtjs/pwa',
     '@nuxtjs/style-resources',
+
   ],
   // 読みませたいscssファイルを指定します。
   styleResources: {
