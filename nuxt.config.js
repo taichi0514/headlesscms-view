@@ -1,5 +1,5 @@
 import pkg from './package'
-
+require('dotenv').config()
 export default {
   mode: 'spa',
 
@@ -33,12 +33,7 @@ export default {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [
-  ],
-
-  env: {
-    baseUrl: process.env.BASE_URL || 'http://localhost:8000/api'
-  },
+  plugins: [],
 
   /*
   ** Nuxt.js modules
@@ -49,6 +44,10 @@ export default {
     '@nuxtjs/proxy',
     '@nuxtjs/pwa',
     '@nuxtjs/style-resources',
+    [
+      '@nuxtjs/dotenv',
+      {filename: process.env.NODE_ENV !== 'production' ? "./.env.dev" : "./.env.prod"}
+    ],
 
   ],
   // 読みませたいscssファイルを指定します。
@@ -60,8 +59,7 @@ export default {
   /*
   ** Axios module configuration
   */
-  axios: {
-  },
+  axios: {},
 
 
   /*

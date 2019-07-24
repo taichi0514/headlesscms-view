@@ -36,7 +36,7 @@
       }
     },
     created() {
-      this.$axios.$get('http://localhost:8000/api/posts/all')
+      this.$axios.$get(process.env.API + 'posts/all')
         .then(res => {
           let resdata = res.data.map(res => {
             return res

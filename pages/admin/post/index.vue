@@ -86,7 +86,7 @@
         const config = {
           headers: {'Content-Type': 'multipart/form-data'}
         };
-        this.$axios.$post('http://localhost:8000/api/upload', formData, config)
+        this.$axios.$post(process.env.API + 'upload', formData, config)
           .then(res => {
             const textarea = document.querySelector('#' + el.id);
             let sentence = textarea.value;
@@ -108,7 +108,7 @@
           seo_title: this.ArticleData.seo_title,
           meta_description: this.ArticleData.meta_description
         }
-        this.$axios.$post('http://localhost:8000/api/posts/create', params)
+        this.$axios.$post(process.env.API + 'posts/create', params)
       },
       OgpHandleDrop: function (event) {
         event.preventDefault();
@@ -123,7 +123,7 @@
         const config = {
           headers: {'Content-Type': 'multipart/form-data'}
         };
-         const res = await this.$axios.$post('http://localhost:8000/api/upload', formData, config)
+         const res = await this.$axios.$post(process.env.API + 'upload', formData, config)
             this.ArticleData.featured_image = res.img;
       },
       ViewReturn: function(){
