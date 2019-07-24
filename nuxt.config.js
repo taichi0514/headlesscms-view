@@ -1,5 +1,7 @@
 import pkg from './package'
-require('dotenv').config()
+
+require('dotenv').config();
+const {API} = process.env;
 
 export default {
   mode: 'spa',
@@ -45,11 +47,6 @@ export default {
     '@nuxtjs/proxy',
     '@nuxtjs/pwa',
     '@nuxtjs/style-resources',
-    [
-      '@nuxtjs/dotenv',
-      {filename: process.env.NODE_ENV !== 'production' ? "./.env.dev" : "./.env.prod"}
-    ],
-
   ],
   // 読みませたいscssファイルを指定します。
   styleResources: {
@@ -61,6 +58,10 @@ export default {
   ** Axios module configuration
   */
   axios: {},
+
+  env: {
+    API
+  },
 
 
   /*
