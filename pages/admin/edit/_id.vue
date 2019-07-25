@@ -14,7 +14,7 @@
       <button class="Articlepost" @click="ViewReturn">戻る</button>
       <div>
         <button class="Articlepost Articledelete" @click="Articledelete">記事削除</button>
-        <button class="Articlepost" @click="Articlepost(); DialogShow()">記事更新</button>
+        <button class="Articlepost" @click="Articlepost()">記事更新</button>
       </div>
     </header>
     <div class="cms-form-wrap">
@@ -128,7 +128,12 @@
           seo_title: this.ArticleData.seo_title,
           meta_description: this.ArticleData.meta_description
         }
-        this.$axios.$post(process.env.API + 'posts/edit', params)
+        if (this.ArticleData.title.length >= 4 & this.ArticleData.body.length >2) {
+          this.$axios.$post(process.env.API + 'posts/edit', params)
+          this.DialogShow();
+        } else {
+          alert("タイトルと本文を入力してください")
+        }
       },
       OgpHandleDrop: function (event) {
         event.preventDefault();

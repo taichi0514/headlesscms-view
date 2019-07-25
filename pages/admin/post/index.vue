@@ -3,7 +3,7 @@
     <dialog id="dialog" class="dialog"><div class="dialog_content"><p>投稿完了</p><nuxt-link to="/admin" class="Articlepost dialog_link">管理画面に戻る</nuxt-link></div></dialog>
     <header>
       <button class="Articlepost" @click="ViewReturn">管理画面に戻る</button>
-      <button class="Articlepost" @click="Articlepost(); DialogShow()">記事投稿</button>
+      <button class="Articlepost" @click="Articlepost">記事投稿</button>
     </header>
     <div class="cms-form-wrap">
       <div class="cms-form">
@@ -108,7 +108,13 @@
           seo_title: this.ArticleData.seo_title,
           meta_description: this.ArticleData.meta_description
         }
-        this.$axios.$post(process.env.API + 'posts/create', params)
+        if (this.ArticleData.title.length >= 4 & this.ArticleData.body.length >2) {
+          this.$axios.$post(process.env.API + 'posts/create', params)
+          this.DialogShow();
+        } else {
+          alert("タイトルと本文を入力してください")
+        }
+
       },
       OgpHandleDrop: function (event) {
         event.preventDefault();
