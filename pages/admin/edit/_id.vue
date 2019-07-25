@@ -79,7 +79,13 @@
       }
     },
     created() {
-      this.$axios.$get(process.env.API + `posts/?id=${this.$route.params.id}`)
+      const params = {
+        params: {
+          // ここにクエリパラメータを指定する
+          id: this.$route.params.id,
+        }
+      };
+      this.$axios.$get(process.env.API + 'posts', params)
         .then((res) => {
           this.ArticleData = res.data
         })
