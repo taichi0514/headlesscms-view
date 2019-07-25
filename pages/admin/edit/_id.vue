@@ -1,13 +1,21 @@
 <template>
   <div class="admin">
-    <dialog id="dialog" class="dialog">
+    <dialog id="dialogPost" class="dialog">
       <div class="dialog_content"><p>更新完了</p>
+        <nuxt-link to="/admin" class="Articlepost dialog_link">管理画面に戻る</nuxt-link>
+      </div>
+    </dialog>
+    <dialog id="dialogDelete" class="dialog">
+      <div class="dialog_content"><p>記事削除完了</p>
         <nuxt-link to="/admin" class="Articlepost dialog_link">管理画面に戻る</nuxt-link>
       </div>
     </dialog>
     <header>
       <button class="Articlepost" @click="ViewReturn">戻る</button>
-      <button class="Articlepost" @click="Articlepost(); DialogShow()">記事更新</button>
+      <div>
+        <button class="Articlepost Articledelete" @click="Articledelete">記事削除</button>
+        <button class="Articlepost" @click="Articlepost(); DialogShow()">記事更新</button>
+      </div>
     </header>
     <div class="cms-form-wrap">
       <div class="cms-form">
@@ -71,7 +79,7 @@
       }
     },
     created() {
-      this.$axios.$get(process.env.API +`posts/?id=${this.$route.params.id}`)
+      this.$axios.$get(process.env.API + `posts/?id=${this.$route.params.id}`)
         .then((res) => {
           this.ArticleData = res.data
         })
@@ -143,8 +151,18 @@
         this.$router.push('/admin')
       },
       DialogShow: function () {
-        const el = document.getElementById('dialog');
+        const el = document.getElementById('dialogPost');
         el.setAttribute('open', '')
+      },
+      Articledelete: function () {
+        const params = {
+          id: this.$route.params.id,
+        }
+        this.$axios.$post(process.env.API + 'posts/delete', params)
+          .then(res => {
+            const el = document.getElementById('dialogDelete');
+            el.setAttribute('open', '')
+          })
       }
     }
   }
@@ -206,6 +224,16 @@
 
   .Articlepost:hover {
     background-color: darken(#dfdfe3, 20%);
+    color: #fff;
+  }
+
+  .Articlepost.Articledelete{
+    background-color: #e67a7a;
+    color: #fff;
+  }
+
+  .Articlepost.Articledelete:hover {
+    background-color: darken(#e67a7a, 30%);
     color: #fff;
   }
 
