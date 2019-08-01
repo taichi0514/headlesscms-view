@@ -1,7 +1,4 @@
-//../pages/admin/index
-import {created} from '../pages/admin/index';
 import * as axios from 'axios';
-// import testFunc from './request';
 
 const testFunc = async url => {
   const res = await axios.get(url)
