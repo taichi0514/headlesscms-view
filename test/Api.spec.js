@@ -1,4 +1,7 @@
+import dotenv from 'dotenv'
 import * as axios from 'axios';
+
+const env = dotenv.config().parsed;
 
 const testFunc = async url => {
   const res = await axios.get(url)
@@ -19,8 +22,8 @@ describe('posts/all', () => {
         })
       }
     }))
-      const res = await testFunc('https://headlesscms-api.herokuapp.com/api/posts/all')
-      expect(res)
+    const res = await testFunc(env.ApiProd + 'posts/all')
+    expect(res)
   })
 });
 
@@ -35,7 +38,7 @@ describe('Posts_id', () => {
         })
       }
     }))
-    const res = await testFunc('https://headlesscms-api.herokuapp.com/api/posts/?id=2')
+    const res = await testFunc(env.ApiProd + 'posts/?id=2')
     expect(res)
   })
 });
@@ -61,7 +64,7 @@ describe('Articlepost', () => {
       seo_title: "seo_title",
       meta_description: "meta_description"
     }
-    const res = await axios.post('https://headlesscms-api.herokuapp.com/api/posts/edit',params)
+    const res = await axios.post(env.ApiProd + 'posts/edit', params)
     expect(res)
   })
 });
@@ -80,7 +83,7 @@ describe('Articledelete', () => {
     const params = {
       id: 2,
     }
-    const res = await axios.post('https://headlesscms-api.herokuapp.com/api/posts/edit',params)
+    const res = await axios.post(env.ApiProd + 'posts/edit', params)
     expect(res)
   })
 });
