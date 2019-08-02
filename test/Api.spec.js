@@ -48,7 +48,7 @@ describe('Articledelete', () => {
   it('axios return mock value', async () => {
     let mockError = false
     jest.mock('axios', () => ({
-      get: (url, body) => {
+      post: (url, body) => {
         return new Promise(resolve => {
           if (mockError) throw Error('Mock error')
           resolve({url, body})
@@ -69,7 +69,7 @@ describe('Articlepost', () => {
   it('axios return mock value', async () => {
     let mockError = false
     jest.mock('axios', () => ({
-      get: (url, body) => {
+      post: (url, body) => {
         return new Promise(resolve => {
           if (mockError) throw Error('Mock error')
           resolve({url, body})
