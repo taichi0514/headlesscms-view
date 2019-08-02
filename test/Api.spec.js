@@ -44,6 +44,27 @@ describe('Posts_id', () => {
 });
 
 
+describe('Articledelete', () => {
+  it('axios return mock value', async () => {
+    let mockError = false
+    jest.mock('axios', () => ({
+      get: (url, body) => {
+        return new Promise(resolve => {
+          if (mockError) throw Error('Mock error')
+          resolve({url, body})
+        })
+      }
+    }))
+    const params = {
+      id: 2,
+    }
+    const res = await axios.post(env.ApiProd + 'posts/edit', params)
+    expect(res)
+  })
+});
+
+
+
 describe('Articlepost', () => {
   it('axios return mock value', async () => {
     let mockError = false
@@ -69,21 +90,3 @@ describe('Articlepost', () => {
   })
 });
 
-describe('Articledelete', () => {
-  it('axios return mock value', async () => {
-    let mockError = false
-    jest.mock('axios', () => ({
-      get: (url, body) => {
-        return new Promise(resolve => {
-          if (mockError) throw Error('Mock error')
-          resolve({url, body})
-        })
-      }
-    }))
-    const params = {
-      id: 2,
-    }
-    const res = await axios.post(env.ApiProd + 'posts/edit', params)
-    expect(res)
-  })
-});
