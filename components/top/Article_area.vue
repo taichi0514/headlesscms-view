@@ -4,15 +4,16 @@
     <div class="article_area_bg"></div>
     <div class="article_list">
       <article class="article_list_item active" v-for="(item,index) in ArticleList" :key="index">
-        <a href="" class="article_list_item_link">
-          <img v-if="item.featured_image　=== null" src="//placehold.jp/290x160.png" alt="" class="article_list_item_image">
+        <a class="article_list_item_link" :href=" 'posts/' +item.id">
+          <img v-if="item.featured_image　=== null" src="//placehold.jp/290x160.png" alt=""
+               class="article_list_item_image">
           <img v-else :src="item.featured_image" alt="" class="article_list_item_image">
-          <section class="article_list_item_section" >
+          <section class="article_list_item_section">
             <h3 class="article_list_item_section_title">{{item.title}}</h3>
             <p class="article_list_item_section_text">{{item.meta_description}}</p>
-            <a href="/categories//"
-               class="article_list_item_category_link"><span
-              class="article_list_item_category">{{item.tag}}</span></a>
+            <a :href="'category/' + item.tag" class="article_list_item_category_link">
+              <span class="article_list_item_category">{{item.tag}}</span>
+            </a>
           </section>
         </a>
       </article>
@@ -28,6 +29,7 @@
     data() {
       return {
         ArticleList: {
+          id: '',
           title: '',
           body: '',
           featured_image: '',
