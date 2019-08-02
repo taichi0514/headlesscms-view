@@ -3,16 +3,16 @@
   <div class="article_area">
     <div class="article_area_bg"></div>
     <div class="article_list">
-      <article class="article_list_item active">
+      <article class="article_list_item active" v-for="(item,index) in ArticleList" :key="index">
         <a href="" class="article_list_item_link">
           <img src="//placehold.jp/290x160.png"
                alt="" class="article_list_item_image">
-          <section class="article_list_item_section">
-            <h3 class="article_list_item_section_title"></h3>
-            <p class="article_list_item_section_text"></p>
+          <section class="article_list_item_section" >
+            <h3 class="article_list_item_section_title">{{item.title}}</h3>
+            <p class="article_list_item_section_text">{{item.meta_description}}</p>
             <a href="/categories//"
                class="article_list_item_category_link"><span
-              class="article_list_item_category"> </span></a>
+              class="article_list_item_category">{{item.tag}}</span></a>
           </section>
         </a>
       </article>
@@ -21,6 +21,34 @@
   </div>
 
 </template>
+
+
+<script>
+  export default {
+    data() {
+      return {
+        ArticleList: {
+          title: '',
+          body: '',
+          featured_image: '',
+          tag: '',
+          seo_title: '',
+          meta_description: '',
+        }
+      }
+    },
+
+    created() {
+      this.$axios.$get(process.env.API + 'posts/all')
+        .then(res => {
+          let resdata = res.data.map(res => {
+            return res
+          })
+          this.ArticleList = resdata
+        })
+    },
+  }
+</script>
 
 
 <style lang="scss" scoped>
@@ -59,7 +87,7 @@
     flex-direction: column;
     align-items: center;
     background-color: #F4F4F4;
-    @include mq(llg){
+    @include mq(llg) {
       background-color: transparent;
       padding: 0;
       flex-direction: row;
@@ -87,12 +115,12 @@
     }
   }
 
-  .article_list_item_image{
+  .article_list_item_image {
     transition: 1s transform;
     height: 160px;
   }
 
-  .article_list_item:hover .article_list_item_image{
+  .article_list_item:hover .article_list_item_image {
     transform: scale(1.1);
   }
 
@@ -172,3 +200,6 @@
 
 
 </style>
+
+
+
