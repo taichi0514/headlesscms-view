@@ -5,8 +5,8 @@
     <div class="article_list">
       <article class="article_list_item active" v-for="(item,index) in ArticleList" :key="index">
         <a href="" class="article_list_item_link">
-          <img src="//placehold.jp/290x160.png"
-               alt="" class="article_list_item_image">
+          <img v-if="item.featured_image　=== null" src="//placehold.jp/290x160.png" alt="" class="article_list_item_image">
+          <img v-else :src="item.featured_image" alt="" class="article_list_item_image">
           <section class="article_list_item_section" >
             <h3 class="article_list_item_section_title">{{item.title}}</h3>
             <p class="article_list_item_section_text">{{item.meta_description}}</p>
