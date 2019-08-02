@@ -5,7 +5,7 @@
       <button class="Articlepost" @click="PostReturn">新規記事投稿</button>
     </header>
       <ul class="ArticleListWrapp">
-        <li class="ArticleList" v-for="(item,index) in ArticleList" :key="index">
+        <li class="ArticleList" v-for="(item) in ArticleList" :key="item.id">
           <nuxt-link class="ArticleListLink" :to="'admin/edit/' + item.id">
             {{item.title}}
           </nuxt-link>
