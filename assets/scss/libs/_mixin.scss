@@ -3,3 +3,77 @@
 @mixin fontsize($size: 16) {
   font-size: ($size / 16)  + rem;
 }
+
+
+@mixin boder_bottom_anime {
+  a {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+  }
+  a::after {
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    content: '';
+    width: 100%;
+    height: 2px;
+    background: #333;
+    transform: scale(0, 1);
+    transform-origin: left top;
+    transition: transform .3s;
+  }
+  a:hover::after {
+    transform: scale(1, 1);
+  }
+}
+
+@mixin submenu() {
+  transform: translateX(0) translateY(0);
+  width: 100%;
+  max-width: 320px;
+  margin-top: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  @include mq(md) {
+    width: 30%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  @include mq(x) {
+    margin-top: 0;
+    margin-left: 50px;
+    width: 230px;
+  }
+}
+
+@mixin index_link_btn($bgc: #232028,$imgpath:"btn-right-arrow.svg",$width:6){
+  position: relative;
+  display: inline-block;
+  background-color: $bgc;
+  text-decoration: none;
+  color: #fff;
+  width: 100%;
+  max-width: 260px;
+  text-align: center;
+  @include fz(14);
+  @include mq(){
+    max-width: none;
+  }
+  &::after {
+    content: "";
+    width: $width + px;
+    height: 10px;
+    background-image: url("~/assets/images/#{$imgpath}");
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateX(-350%) translateY(-50%);
+    @include fz(12);
+    font-weight: bold;
+    transition: 1s transform;
+  }
+}
+
+
