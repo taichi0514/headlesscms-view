@@ -57,7 +57,7 @@
   width: 100%;
   max-width: 260px;
   text-align: center;
-  @include fz(14);
+  @include fontsize(14);
   @include mq(){
     max-width: none;
   }
@@ -65,12 +65,12 @@
     content: "";
     width: $width + px;
     height: 10px;
-    background-image: url("~/assets/images/#{$imgpath}");
+    background-image: url("/images/#{$imgpath}");
     position: absolute;
     top: 50%;
     right: 0;
     transform: translateX(-350%) translateY(-50%);
-    @include fz(12);
+    @include fontsize(12);
     font-weight: bold;
     transition: 1s transform;
   }
