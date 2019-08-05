@@ -86,10 +86,11 @@
         }
       };
       this.$axios.$get(process.env.API + 'posts', params)
-        .then((res) => {
+        .then(function(res)  {
           this.ArticleData = res.data
-        })
+        }.bind(this))
     },
+
     computed: {
       compiledMarkdown: function () {
         marked.setOptions({breaks: true})
@@ -123,7 +124,6 @@
             const after = sentence.substr(pos, len);
             sentence = before + word + after;
             this.ArticleData.body = sentence;
-            console.log(this)
           }.bind(this)).then(() => {
           this.$nuxt.$loading.finish()
         })
