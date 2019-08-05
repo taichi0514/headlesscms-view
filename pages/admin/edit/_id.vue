@@ -112,17 +112,21 @@
           headers: {'Content-Type': 'multipart/form-data'}
         };
         this.$axios.$post(process.env.API + 'upload', formData, config)
-          .then(res => {
+          .then(function(res) {
+            this.$nuxt.$loading.start()
             const textarea = document.querySelector('#' + el.id);
             let sentence = textarea.value;
             const len = sentence.length;
             const pos = textarea.selectionStart;
             const before = sentence.substr(0, pos);
-            const word = '<img src="' + res.img + '"/>';
+            const word = '![](' + res.img + ')';
             const after = sentence.substr(pos, len);
             sentence = before + word + after;
-            textarea.value = sentence;
-          })
+            this.ArticleData.body = sentence;
+            console.log(this)
+          }.bind(this)).then(() => {
+          this.$nuxt.$loading.finish()
+        })
       },
       Articlepost: function () {
         const params = {
@@ -134,9 +138,14 @@
           seo_title: this.ArticleData.seo_title,
           meta_description: this.ArticleData.meta_description
         }
-        if (this.ArticleData.title.length >= 4 & this.ArticleData.body.length >2) {
-          this.$axios.$post(process.env.API + 'posts/edit', params)
-          this.DialogShow();
+        if (this.ArticleData.title.length >= 4 & this.ArticleData.body.length > 2) {
+          this.$axios.$post(process.env.API + 'posts/edit', params).then(() => {
+            this.$nuxt.$loading.start()
+            this.DialogShow();
+          }).then(() => {
+            this.$nuxt.$loading.finish()
+          })
+
         } else {
           alert("タイトルと本文を入力してください")
         }
@@ -238,7 +247,7 @@
     color: #fff;
   }
 
-  .Articlepost.Articledelete{
+  .Articlepost.Articledelete {
     background-color: #e67a7a;
     color: #fff;
   }
