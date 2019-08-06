@@ -1,50 +1,48 @@
 <template>
-  <div>
-<!--    <Header/>-->
-    <main>
-        <section class="main_visual">
-          <h1>
-            <img src="/images/logo.svg" alt="" class="main_visual_logo">
-          </h1>
-          <img src="/images/mv_pc.jpg" alt="" class="main_visual_image for-pc">
-          <img src="/images/mv_sp.jpg" alt="" class="main_visual_image for-sp">
-          <p class="post_read">BLOG</p>
-        </section>
+  <main>
+    <section class="main_visual">
+      <h1>
+        <img src="/images/logo.svg" alt="" class="main_visual_logo">
+      </h1>
+      <img src="/images/mv_pc.jpg" alt="" class="main_visual_image for-pc">
+      <img src="/images/mv_sp.jpg" alt="" class="main_visual_image for-sp">
+      <p class="post_read">BLOG</p>
+    </section>
 
-      <div class="content">
+    <div class="content">
 
-        <article class="post">
-            <div v-html="compiledMarkdown"></div>
-          <div class="single_meta">
-            <a class="category" :href="'/categories/' +  ArticleData.tag">
-              {{ArticleData.tag }}
-            </a>
-            <!--          <p>-->
-            <!--            <time datetime="{{ .Date.Local.Format "2006-01-02" }}">-->
-            <!--            {{ .Date.Local.Format "2006/01/02 15:04" }}-->
-            <!--            </time></p>-->
-          </div>
+      <article class="post">
+        <div class="article" v-html="compiledMarkdown"></div>
+        <div class="single_meta">
+          <a class="category" :href="'/categories/' +  ArticleData.tag">
+            {{ArticleData.tag }}
+          </a>
+          <!--          <p>-->
+          <!--            <time datetime="{{ .Date.Local.Format "2006-01-02" }}">-->
+          <!--            {{ .Date.Local.Format "2006/01/02 15:04" }}-->
+          <!--            </time></p>-->
+        </div>
 
-        </article>
+      </article>
 
-        <aside class="submenu">
-          <p class="submenu_title">カテゴリ</p>
-          <div class="submenu_list_wrap">
-            <ul class="submenu_list">
-              <li class="submenu_list_item"><a :href="'/categories/' + ArticleData.tag">{{ArticleData.tag}}</a></li>
-            </ul>
-            <p class="submenu_text"></p>
-          </div>
-        </aside>
+      <aside class="submenu">
+        <p class="submenu_title">カテゴリ</p>
+        <div class="submenu_list_wrap">
+          <ul class="submenu_list">
+            <li class="submenu_list_item"><a :href="'/categories/' + ArticleData.tag">{{ArticleData.tag}}</a></li>
+          </ul>
+          <p class="submenu_text"></p>
+        </div>
+      </aside>
 
-      </div>
-    </main>
-  </div>
+    </div>
+  </main>
 </template>
 
 <script>
   import Header from '~/components/common/Header.vue'
   import marked from 'marked';
+
   export default {
     components: {
       Header,
@@ -81,6 +79,117 @@
     },
   }
 </script>
+
+
+<style lang="scss">
+  article.post .article {
+    position: relative;
+  }
+
+  article.post .article h2 {
+    @include fontsize(22);
+    position: relative;
+    border-bottom: #f4f4f4 solid 3px;
+    width: 100%;
+    margin: 0 0 42px;
+    padding-bottom: 15px;
+  }
+
+  article.post .article h2::after {
+    content: "";
+    display: block;
+    background-color: #000;
+    width: 120px;
+    height: 3px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    transform: translateY(50%);
+  }
+
+  article.post .article strong {
+    font-weight: bold;
+  }
+
+  article.post .article h3 {
+    @include fontsize(15);
+    font-weight: bold;
+    position: relative;
+    background-color: #f4f4f4;
+    padding: 20px 10px 20px 40px;
+    margin: 40px 0 0;
+  }
+
+  article.post .article h3::before {
+    content: "●";
+    font-weight: bold;
+    position: absolute;
+    transform: translateX(-120%);
+  }
+
+  article.post .article h4 {
+    @include fontsize(15);
+    font-weight: bold;
+    margin-top: 16px;
+  }
+
+  article.post .article p {
+    margin-top: 20px;
+    line-height: 1.8;
+  }
+
+  article.post .article img {
+    width: 50%;
+    margin: 20px auto;
+    display: block;
+  }
+
+  article.post .article ol,
+  article.post .article ul {
+    padding: 20px 0 20px 20px;
+  }
+
+  article.post .article li {
+    margin-top: 18px;
+  }
+
+  article.post .article li:first-child {
+    margin-top: 0;
+  }
+
+  article.post .article .single_meta {
+    display: flex;
+    align-items: center;
+  }
+
+  article.post .article .single_meta p {
+    margin-left: 10px;
+  }
+
+  .article.post .article single_meta p:first-child {
+    margin-left: 0;
+  }
+
+  article.post .article .note_post {
+    background-color: #f4f4f4;
+    width: 100%;
+    padding: 30px 20px;
+  }
+
+  article.post .article .category {
+    text-decoration: none;
+    display: inline-block;
+    border: #f4f4f4 solid 1px;
+    border-radius: 16px;
+    padding: 4px 16px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: 0.75rem;
+    color: #000;
+    text-align: left;
+  }
+</style>
+
 
 
 <style lang="scss" scoped>
@@ -389,106 +498,6 @@
 
   body {
     @include fontsize(14);
-  }
-
-  .post {
-    position: relative;
-    h2 {
-      @include fontsize(22);
-      position: relative;
-      border-bottom: #f4f4f4 solid 3px;
-      width: 100%;
-      margin: 0 0 42px;
-      padding-bottom: 15px;
-    }
-
-    h2::after {
-      content: "";
-      display: block;
-      background-color: #000;
-      width: 120px;
-      height: 3px;
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      transform: translateY(50%);
-    }
-
-    strong {
-      font-weight: bold;
-    }
-
-    h3 {
-      @include fontsize(15);
-      font-weight: bold;
-      position: relative;
-      background-color: #f4f4f4;
-      padding: 20px 10px 20px 40px;
-      margin: 40px 0 0;
-    }
-
-    h3::before {
-      content: "●";
-      font-weight: bold;
-      position: absolute;
-      transform: translateX(-120%);
-    }
-
-    h4 {
-      @include fontsize(15);
-      font-weight: bold;
-      margin-top: 16px;
-    }
-
-    img {
-      width: 50%;
-      margin: 20px auto;
-      display: block;
-    }
-
-    ol,
-    ul {
-      padding: 20px 0 20px 20px;
-    }
-
-    li {
-      margin-top: 18px;
-    }
-    li:first-child {
-      margin-top: 0;
-    }
-
-    .single_meta {
-      display: flex;
-      align-items: center;
-    }
-
-    .single_meta p {
-      margin-left: 10px;
-    }
-
-    .single_meta p:first-child {
-      margin-left: 0;
-    }
-
-    .note_post {
-      background-color: #f4f4f4;
-      width: 100%;
-      padding: 30px 20px;
-    }
-
-    .category {
-      text-decoration: none;
-      display: inline-block;
-      border: #f4f4f4 solid 1px;
-      border-radius: 16px;
-      padding: 4px 16px;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-      font-size: 0.75rem;
-      color: #000;
-      text-align: left;
-    }
   }
 
   .content {

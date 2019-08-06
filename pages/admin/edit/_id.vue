@@ -32,7 +32,7 @@
 
         <fieldset>
           <legend>OGP画像</legend>
-          <img :src=ArticleData.featured_image alt="" id="featured_image">
+          <img :src=ArticleData.featured_image alt="" id="featured_image" class="featured_image">
           <input type="file" name="file" @change="OgpHandleDrop">
         </fieldset>
 
@@ -188,9 +188,123 @@
   }
 </script>
 
+
+<style lang="scss">
+  .cms-form-view {
+    h2 {
+      @include fontsize(22);
+      position: relative;
+      border-bottom: #f4f4f4 solid 3px;
+      width: 100%;
+      margin: 0 0 42px;
+      padding-bottom: 15px;
+    }
+
+    h2::after {
+      content: "";
+      display: block;
+      background-color: #000;
+      width: 120px;
+      height: 3px;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      transform: translateY(50%);
+    }
+
+    strong {
+      font-weight: bold;
+    }
+
+    h3 {
+      @include fontsize(15);
+      font-weight: bold;
+      position: relative;
+      background-color: #f4f4f4;
+      padding: 20px 10px 20px 40px;
+      margin: 40px 0 0;
+    }
+
+    h3::before {
+      content: "●";
+      font-weight: bold;
+      position: absolute;
+      transform: translateX(-120%);
+    }
+
+    h4 {
+      @include fontsize(15);
+      font-weight: bold;
+      margin-top: 16px;
+    }
+
+    p {
+      margin-top: 20px;
+      line-height: 1.8;
+    }
+
+    img {
+      width: 50%;
+      margin: 20px auto;
+      display: block;
+    }
+
+    ol,
+    ul {
+      padding: 20px 0 20px 20px;
+    }
+
+    li {
+      margin-top: 18px;
+    }
+
+    li:first-child {
+      margin-top: 0;
+    }
+
+    .single_meta {
+      display: flex;
+      align-items: center;
+    }
+
+    .single_meta p {
+      margin-left: 10px;
+    }
+
+    .single_meta p:first-child {
+      margin-left: 0;
+    }
+
+    .note_post {
+      background-color: #f4f4f4;
+      width: 100%;
+      padding: 30px 20px;
+    }
+
+    .category {
+      text-decoration: none;
+      display: inline-block;
+      border: #f4f4f4 solid 1px;
+      border-radius: 16px;
+      padding: 4px 16px;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+      font-size: 0.75rem;
+      color: #000;
+      text-align: left;
+    }
+  }
+</style>
+
 <style scoped lang="scss">
   .admin {
     position: relative;
+  }
+
+  .featured_image{
+    width: 50%;
+    margin: 40px auto;
+    display: block;
   }
 
   .dialog {
