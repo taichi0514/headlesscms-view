@@ -4,13 +4,17 @@
       <button class="Articlepost" @click="ViewReturn">トップページに戻る</button>
       <button class="Articlepost" @click="PostReturn">新規記事投稿</button>
     </header>
-      <ul class="ArticleListWrapp">
-        <li class="ArticleList" v-for="(item) in ArticleList" :key="item.id">
-          <nuxt-link class="ArticleListLink" :to="'admin/edit/' + item.id">
-            {{item.title}}
-          </nuxt-link>
-        </li>
-      </ul>
+    <ul class="ArticleListWrapp">
+      <li class="ArticleList" v-for="(item) in ArticleList" :key="item.id">
+        <nuxt-link class="ArticleListLink" :to="'admin/edit/' + item.id">
+          <div class="ArticleListLinkInner">
+            <p>{{item.title}}</p>
+            <p>{{item.updated_at}}</p>
+          </div>
+        </nuxt-link>
+
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -31,7 +35,7 @@
           featured_image: '',
           tag: '',
           seo_title: '',
-          meta_description: '',
+          meta_description: ''
         }
       }
     },
@@ -44,11 +48,11 @@
           this.ArticleList = resdata
         })
     },
-    methods:{
-      ViewReturn: function(){
+    methods: {
+      ViewReturn: function () {
         this.$router.push('/')
       },
-      PostReturn: function(){
+      PostReturn: function () {
         this.$router.push('/admin/post')
       },
     }
@@ -57,12 +61,13 @@
 
 <style scoped lang="scss">
 
-  header{
+  header {
     padding: 20px;
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
   }
-  .Articlepost{
+
+  .Articlepost {
     appearance: none;
     border: none;
     background-color: #a9a9b3;
@@ -71,10 +76,11 @@
     cursor: pointer;
     font-weight: bold;
     color: #fff;
-    transition: background-color 1s,color 1s;
+    transition: background-color 1s, color 1s;
   }
-  .Articlepost:hover{
-    background-color: darken(#a9a9b3,20%);
+
+  .Articlepost:hover {
+    background-color: darken(#a9a9b3, 20%);
   }
 
   .ArticleListWrapp {
@@ -99,9 +105,15 @@
 
   .ArticleListLink {
     color: #000;
-    padding: 16px 22px;
+    padding: 16px 44px;
     text-decoration: none;
     display: block;
+  }
+
+  .ArticleListLinkInner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
 
