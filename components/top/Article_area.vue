@@ -189,6 +189,7 @@
     display: block;
     padding: 12px 0;
     max-width: 260px;
+    cursor: pointer;
     @include mq {
       max-width: 240px;
       padding: 12px 0px;
