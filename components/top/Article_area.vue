@@ -41,7 +41,13 @@
     },
 
     created() {
-      this.$axios.$get(process.env.API + 'posts/all')
+      const params = {
+        params: {
+          paginate: 4,
+          page: 1
+        }
+      };
+      this.$axios.$get(process.env.API + 'paginate',params)
         .then(res => {
           let resdata = res.data.map(res => {
             return res

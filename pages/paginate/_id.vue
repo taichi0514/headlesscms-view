@@ -69,7 +69,6 @@
           this.first_page_url = res.first_page_url
           this.next_page_url = res.next_page_url
           this.ArticleList = resdata
-          console.log(res)
         })
     },
     methods: {
