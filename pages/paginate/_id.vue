@@ -2,8 +2,8 @@
   <div class="article_area">
     <div class="article_area_bg"></div>
     <div class="article_list">
-      <article class="article_list_item active" v-for="(item,index) in ArticleList" :key="_page">
-        <a class="article_list_item_link" :href=" 'article/' +item.id">
+      <article class="article_list_item active" v-for="(item,index) in ArticleList" :key="index">
+        <a class="article_list_item_link" :href=" '/article/' +item.id">
           <img v-if="item.featured_image　=== null" src="//placehold.jp/290x160.png" alt=""
                class="article_list_item_image">
           <img v-else :src="item.featured_image" alt="" class="article_list_item_image">
@@ -12,16 +12,16 @@
             <p class="article_list_item_section_text">{{item.meta_description}}</p>
             <a :href="'category/' + item.tag" class="article_list_item_category_link">
               <span class="article_list_item_category">{{item.tag}}</span>
-              <p>{{current_page_next}}</p>
+              <p>{{now_page_next}}</p>
             </a>
           </section>
         </a>
       </article>
     </div>
-    <a :href="ho" class="article_list_link">みぎ</a>
-    <button class="article_list_link">戻る</button>
-    <button class="article_list_link" @click="next()">次へ</button>
-
+    <div class="wrap_button">
+      <button v-if="this.current_page !== 1 " class="article_list_link" @click="back">戻る</button>
+      <button v-if="this.next_page_url　!== null" class="article_list_link" @click="next">次へ</button>
+    </div>
   </div>
 </template>
 
@@ -39,18 +39,20 @@
           seo_title: '',
           meta_description: '',
         },
-        current_page: this.$route.params.id,
+        now_page: this.$route.params.id,
+        current_page: '',
+        first_page_url: '',
+        next_page_url: ''
       }
     },
 
     computed: {
-      current_page_next: function(){
-        this.current_page
+      now_page_next: function () {
+        this.now_page++
       }
     },
 
     created() {
-      console.log("hoge" + this.current_page_next)
       const params = {
         params: {
           // ここにクエリパラメータを指定する
@@ -63,41 +65,43 @@
           let resdata = res.data.map(res => {
             return res
           })
+          this.current_page = res.current_page
+          this.first_page_url = res.first_page_url
+          this.next_page_url = res.next_page_url
           this.ArticleList = resdata
+          console.log(res)
         })
     },
     methods: {
-      next: function () {
+      async next() {
         const params = {
           params: {
             paginate: 4,
             page: this.$route.params.id++
           }
         };
-        this.$axios.$get(process.env.API + 'paginate', params)
-          .then(res => {
-            this.current_page = res.current_page
-            let resdata = res.data.map(res => {
-              return res
-            })
-            this.ArticleList = resdata
-          })
+        const res = await this.$axios.$get(process.env.API + 'paginate', params)
+        this.now_page = res.now_page
+        let resdata = res.data.map(res => {
+          return res
+        })
+        this.ArticleList = resdata
+        location.replace('/paginate/' + this.$route.params.id)
       },
-      return: function () {
+      async back() {
         const params = {
           params: {
             paginate: 4,
             page: this.$route.params.id--
           }
         };
-        this.$axios.$get(process.env.API + 'paginate', params)
-          .then(res => {
-            this.current_page = res.current_page
-            let resdata = res.data.map(res => {
-              return res
-            })
-            this.ArticleList = resdata
-          })
+        const res = await this.$axios.$get(process.env.API + 'paginate', params)
+        this.now_page = res.now_page
+        let resdata = res.data.map(res => {
+          return res
+        })
+        this.ArticleList = resdata
+        location.replace('/paginate/' + this.$route.params.id)
       }
     },
   }
@@ -249,6 +253,10 @@
 
   .article_list_link:hover::after {
     transform: translateX(-60%) translateY(-50%);
+  }
+
+  .wrap_button{
+    padding-top: 90px;
   }
 
 

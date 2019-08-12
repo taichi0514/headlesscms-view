@@ -18,7 +18,7 @@
         </a>
       </article>
     </div>
-    <a href="/tags/news/" class="article_list_link">一覧をみる</a>
+    <a href="/paginate/1" class="article_list_link">一覧をみる</a>
   </div>
 
 </template>
