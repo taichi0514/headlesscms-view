@@ -191,6 +191,7 @@
 
   .article_list_item_image {
     width: 100%;
+    object-fit: contain;
   }
 
   .article_list_item_section {
