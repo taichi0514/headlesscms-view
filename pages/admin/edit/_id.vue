@@ -53,8 +53,8 @@
       </div>
 
       <div class="cms-form-view">
-        <h2>{{ArticleData.title}}</h2>
-        <p v-html="compiledMarkdown"></p>
+        <h1 class="cms-form-view-title">{{ArticleData.title}}</h1>
+        <div v-html="compiledMarkdown"></div>
       </div>
     </div>
   </div>
@@ -86,7 +86,7 @@
         }
       };
       this.$axios.$get(process.env.API + 'posts', params)
-        .then(function(res)  {
+        .then(function (res) {
           this.ArticleData = res.data
         }.bind(this))
     },
@@ -113,7 +113,7 @@
           headers: {'Content-Type': 'multipart/form-data'}
         };
         this.$axios.$post(process.env.API + 'upload', formData, config)
-          .then(function(res) {
+          .then(function (res) {
             this.$nuxt.$loading.start()
             const textarea = document.querySelector('#' + el.id);
             let sentence = textarea.value;
@@ -191,12 +191,18 @@
 
 <style lang="scss">
   .cms-form-view {
+
+    .cms-form-view-title {
+      @include fontsize(26);
+      margin: 70px 0 0;
+    }
+
     h2 {
       @include fontsize(22);
       position: relative;
       border-bottom: #f4f4f4 solid 3px;
       width: 100%;
-      margin: 0 0 42px;
+      margin: 70px 0 42px;
       padding-bottom: 15px;
     }
 
@@ -301,7 +307,7 @@
     position: relative;
   }
 
-  .featured_image{
+  .featured_image {
     width: 50%;
     margin: 40px auto;
     display: block;
