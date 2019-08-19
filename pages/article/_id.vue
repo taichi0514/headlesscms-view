@@ -44,6 +44,11 @@
   import marked from 'marked';
 
   export default {
+    head () {
+      return {
+        title: this.ArticleData.seo_title
+      }
+    },
     components: {
       Header,
     },
@@ -75,7 +80,9 @@
       this.$axios.$get(process.env.API + 'posts', params)
         .then(function (res) {
           this.ArticleData = res.data
+          console.log(this.ArticleData.seo_title)
         }.bind(this))
+
     },
   }
 </script>

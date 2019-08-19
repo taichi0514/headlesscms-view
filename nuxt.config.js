@@ -10,7 +10,8 @@ export default {
   ** Headers of the page
   */
   head: {
-    title: pkg.name,
+    title:'',
+    titleTemplate: '%s | CMS DEMO',
     meta: [
       {charset: 'utf-8'},
       {name: 'viewport', content: 'width=device-width, initial-scale=1'},
