@@ -44,12 +44,12 @@
   import marked from 'marked';
 
   export default {
-    head () {
+    head() {
       return {
         title: this.ArticleData.seo_title,
         meta: [
-          { hid: 'og:description', property: 'og:description', content: this.ArticleData.meta_description },
-          { hid: 'og:image', property: 'og:image', content: this.ArticleData.featured_image },
+          {hid: 'og:description', property: 'og:description', content: this.ArticleData.meta_description},
+          {hid: 'og:image', property: 'og:image', content: this.ArticleData.featured_image},
         ],
       }
     },
@@ -68,6 +68,15 @@
         }
       }
     },
+    async asyncData({ $axios,params }) {
+      const data = {
+        params: {
+          id: params.id,
+        }
+      };
+      const res = await $axios.$get(process.env.API + 'posts', data);
+      return {res}
+    },
     computed: {
       compiledMarkdown: function () {
         marked.setOptions({breaks: true})
@@ -75,18 +84,7 @@
       }
     },
     created() {
-      const params = {
-        params: {
-          // ここにクエリパラメータを指定する
-          id: this.$route.params.id,
-        }
-      };
-      this.$axios.$get(process.env.API + 'posts', params)
-        .then(function (res) {
-          this.ArticleData = res.data
-          console.log(this.ArticleData.seo_title)
-        }.bind(this))
-
+      this.ArticleData = this.res.data
     },
   }
 </script>
@@ -200,7 +198,6 @@
     text-align: left;
   }
 </style>
-
 
 
 <style lang="scss" scoped>
