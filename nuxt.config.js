@@ -4,7 +4,7 @@ require('dotenv').config();
 const {API} = process.env;
 
 export default {
-  mode: 'spa',
+  mode: 'ssr',
 
   /*
   ** Headers of the page
