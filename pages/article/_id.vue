@@ -46,7 +46,11 @@
   export default {
     head () {
       return {
-        title: this.ArticleData.seo_title
+        title: this.ArticleData.seo_title,
+        meta: [
+          { hid: 'og:description', property: 'og:description', content: this.ArticleData.meta_description },
+          { hid: 'og:image', property: 'og:image', content: this.ArticleData.featured_image },
+        ],
       }
     },
     components: {
