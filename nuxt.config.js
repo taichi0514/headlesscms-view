@@ -15,11 +15,13 @@ export default {
     meta: [
       {charset: 'utf-8'},
       {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-      {hid: 'description', name: 'description', content: 'CMS DEMO'},
-      {hid: 'og:title', name: 'og:title', content: 'CMS DEMO'},
-      {hid: 'og:site_name', name: 'og:site_name', content: 'CMS DEMO'},
-      {hid: 'og:description', name: 'og:description', content: 'CMS DEMO'},
-      {hid: 'og:image', name: 'og:image', content: 'https://headlesscms-api.s3.ap-northeast-1.amazonaws.com/test/sQ1p0a2Dk2Lb3QkrKxZ8eoL9laEWQ0zJelMeAVfQ.jpeg'},
+      { hid: 'description', name: 'description', content: 'CMS DEMO' },
+      { hid: 'og:site_name', property: 'og:site_name', content: 'CMS DEMO' },
+      { hid: 'og:type', property: 'og:type', content: 'website' },
+      { hid: 'og:url', property: 'og:url', content: 'https://headlesscms-view.herokuapp.com' },
+      { hid: 'og:title', property: 'og:title', content: 'CMS DEMO' },
+      { hid: 'og:description', property: 'og:description', content: 'CMS DEMO' },
+      { hid: 'og:image', property: 'og:image', content: 'https://headlesscms-api.s3.ap-northeast-1.amazonaws.com/test/sQ1p0a2Dk2Lb3QkrKxZ8eoL9laEWQ0zJelMeAVfQ.jpeg' },
       {hid: 'apple-mobile-web-app-title', name: 'apple-mobile-web-app-title', content: 'CMS DEMO'},
     ],
     link: [
