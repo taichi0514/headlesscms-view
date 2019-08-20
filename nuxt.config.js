@@ -10,12 +10,17 @@ export default {
   ** Headers of the page
   */
   head: {
-    title:'',
+    title: '',
     titleTemplate: '%s | CMS DEMO',
     meta: [
       {charset: 'utf-8'},
       {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-      {hid: 'description', name: 'description', content: pkg.description}
+      {hid: 'description', name: 'description', content: 'CMS DEMO'},
+      {hid: 'description', name: 'og:title', content: 'CMS DEMO'},
+      {hid: 'description', name: 'og:site_name', content: 'CMS DEMO'},
+      {hid: 'description', name: 'og:description', content: 'CMS DEMO'},
+      {hid: 'description', name: 'og:image', content: 'https://headlesscms-api.s3.ap-northeast-1.amazonaws.com/test/sQ1p0a2Dk2Lb3QkrKxZ8eoL9laEWQ0zJelMeAVfQ.jpeg'},
+      {hid: 'description', name: 'apple-mobile-web-app-title', content: 'CMS DEMO'},
     ],
     link: [
       {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
