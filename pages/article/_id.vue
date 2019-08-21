@@ -14,7 +14,7 @@
       <article class="post">
         <div class="article" v-html="compiledMarkdown"></div>
         <div class="single_meta">
-          <a class="category" :href="'/categories/' +  ArticleData.tag">
+          <a class="category" :href="'/category/' +  ArticleData.tag">
             {{ArticleData.tag }}
           </a>
           <!--          <p>-->
@@ -29,7 +29,7 @@
         <p class="submenu_title">カテゴリ</p>
         <div class="submenu_list_wrap">
           <ul class="submenu_list">
-            <li class="submenu_list_item"><a :href="'/categories/' + ArticleData.tag">{{ArticleData.tag}}</a></li>
+            <li class="submenu_list_item" v-for="(item,index) in TagAll" :key="index"><a :href="'/category/' +item.tag">{{item.tag}}</a></li>
           </ul>
           <p class="submenu_text"></p>
         </div>
@@ -65,6 +65,9 @@
           tag: '',
           seo_title: '',
           meta_description: '',
+        },
+        TagAll:{
+          tag: '',
         }
       }
     },
@@ -74,8 +77,10 @@
           id: params.id,
         }
       };
-      const res = await $axios.$get(process.env.API + 'posts', data);
-      return {res}
+      const res_posts = await $axios.$get(process.env.API + 'posts', data);
+      const tag_all = await $axios.$get(process.env.API + 'tag/all');
+      console.log(tag_all.data)
+      return {res_posts,tag_all}
     },
     computed: {
       compiledMarkdown: function () {
@@ -84,7 +89,8 @@
       }
     },
     created() {
-      this.ArticleData = this.res.data
+      this.ArticleData = this.res_posts.data
+      this.TagAll = this.tag_all
     },
   }
 </script>

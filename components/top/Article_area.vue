@@ -4,7 +4,7 @@
     <div class="article_area_bg"></div>
     <div class="article_list">
       <article class="article_list_item active" v-for="(item,index) in ArticleList" :key="index">
-        <a class="article_list_item_link" :href=" 'article/' +item.id">
+        <nuxt-link class="article_list_item_link" :to=" 'article/' +item.id">
           <img v-if="item.featured_image　=== null" src="//placehold.jp/290x160.png" alt=""
                class="article_list_item_image">
           <img v-else :src="item.featured_image" alt="" class="article_list_item_image">
@@ -15,7 +15,7 @@
               <span class="article_list_item_category">{{item.tag}}</span>
             </a>
           </section>
-        </a>
+        </nuxt-link>
       </article>
     </div>
     <a href="/paginate/1" class="article_list_link">一覧をみる</a>

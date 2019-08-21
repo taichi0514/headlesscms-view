@@ -2,20 +2,20 @@
   <div class="article_area">
     <div class="article_area_bg"></div>
     <div class="article_list">
-      <article class="article_list_item active" v-for="(item,index) in ArticleList" :key="index">
-        <nuxt-link class="article_list_item_link" :to=" '/article/' +item.id">
+      <article class="article_list_item active" v-for="(item,index) in this.tag_all" :key="index">
+        <a class="article_list_item_link" :href=" '/article/' +item.id">
           <img v-if="item.featured_image　=== null" src="//placehold.jp/290x160.png" alt=""
                class="article_list_item_image">
           <img v-else :src="item.featured_image" alt="" class="article_list_item_image">
           <section class="article_list_item_section">
             <h3 class="article_list_item_section_title">{{item.title}}</h3>
             <p class="article_list_item_section_text">{{item.meta_description}}</p>
-            <nuxt-link :to="'category/' + item.tag" class="article_list_item_category_link">
+            <a :href="'/category/' + item.tag" class="article_list_item_category_link">
               <span class="article_list_item_category">{{item.tag}}</span>
               <p>{{now_page_next}}</p>
-            </nuxt-link>
+            </a>
           </section>
-        </nuxt-link>
+        </a>
       </article>
     </div>
     <div class="wrap_button">
@@ -42,7 +42,7 @@
         now_page: this.$route.params.id,
         current_page: '',
         first_page_url: '',
-        next_page_url: ''
+        next_page_url: '',
       }
     },
 
@@ -52,24 +52,14 @@
       }
     },
 
-    created() {
-      const params = {
+    async asyncData({ $axios,params }) {
+      const data = {
         params: {
-          // ここにクエリパラメータを指定する
-          paginate: 4,
-          page: this.$route.params.id
+          tag: params.id,
         }
       };
-      this.$axios.$get(process.env.API + 'paginate', params)
-        .then(res => {
-          let resdata = res.data.map(res => {
-            return res
-          })
-          this.current_page = res.current_page
-          this.first_page_url = res.first_page_url
-          this.next_page_url = res.next_page_url
-          this.ArticleList = resdata
-        })
+      const tag_all = await $axios.$get(process.env.API + 'tag/',data );
+      return {tag_all}
     },
     methods: {
       async next() {
@@ -85,7 +75,7 @@
           return res
         })
         this.ArticleList = resdata
-        this.$router.push('/paginate/' + this.$route.params.id)
+        this.$router.push(this.$route.params.id)
       },
       async back() {
         const params = {
@@ -100,12 +90,11 @@
           return res
         })
         this.ArticleList = resdata
-        this.$router.push('/paginate/' + this.$route.params.id)
+        this.$router.push(this.$route.params.id)
       }
     },
   }
 </script>
-
 
 <style lang="scss" scoped>
 
@@ -256,12 +245,6 @@
     transform: translateX(-60%) translateY(-50%);
   }
 
-  .wrap_button{
-    padding-top: 90px;
-  }
-
 
 </style>
-
-
 
