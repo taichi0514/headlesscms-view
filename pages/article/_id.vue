@@ -14,9 +14,9 @@
       <article class="post">
         <div class="article" v-html="compiledMarkdown"></div>
         <div class="single_meta">
-          <a class="category" :href="'/category/' +  ArticleData.tag">
+          <nuxt-link class="category" :to="'/category/' +  ArticleData.tag">
             {{ArticleData.tag }}
-          </a>
+          </nuxt-link>
           <!--          <p>-->
           <!--            <time datetime="{{ .Date.Local.Format "2006-01-02" }}">-->
           <!--            {{ .Date.Local.Format "2006/01/02 15:04" }}-->
@@ -29,7 +29,7 @@
         <p class="submenu_title">カテゴリ</p>
         <div class="submenu_list_wrap">
           <ul class="submenu_list">
-            <li v-for="(item,index) in TagAll" :key="index"><a class="submenu_list_item" :href="'/category/' +item.tag" v-if="item.tag　!== null">{{item.tag}}</a>
+            <li v-for="(item,index) in TagAll" :key="index"><nuxt-link class="submenu_list_item" :to="'/category/' +item.tag" v-if="item.tag　!== null">{{item.tag}}</nuxt-link>
               <v-else></v-else></li>
           </ul>
           <p class="submenu_text"></p>

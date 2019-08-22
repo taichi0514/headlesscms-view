@@ -2,30 +2,26 @@
   <div class="article_area">
     <div class="article_area_bg"></div>
     <div class="article_list">
-      <article class="article_list_item active" v-for="(item,index) in this.tag_all" :key="index">
-        <a class="article_list_item_link" :href=" '/article/' +item.id">
+      <article class="article_list_item active" v-for="(item,index) in ArticleList" :key="index">
+        <nuxt-link class="article_list_item_link" :to=" '/article/' +item.id">
           <img v-if="item.featured_image　=== null" src="//placehold.jp/290x160.png" alt=""
                class="article_list_item_image">
           <img v-else :src="item.featured_image" alt="" class="article_list_item_image">
           <section class="article_list_item_section">
             <h3 class="article_list_item_section_title">{{item.title}}</h3>
             <p class="article_list_item_section_text">{{item.meta_description}}</p>
-            <a :href="'/category/' + item.tag" class="article_list_item_category_link">
+            <nuxt-link :to="'/category/' + item.tag" class="article_list_item_category_link">
               <div v-if="item.tag　=== null">
               </div>
               <div v-else>
                 <span class="article_list_item_category">{{item.tag}}</span>
               </div>
-              <p>{{now_page_next}}</p>
-            </a>
+            </nuxt-link>
           </section>
-        </a>
+        </nuxt-link>
       </article>
     </div>
-    <div class="wrap_button">
-      <button v-if="this.current_page !== 1 " class="article_list_link" @click="back">戻る</button>
-      <button v-if="this.next_page_url　!== null" class="article_list_link" @click="next">次へ</button>
-    </div>
+    <button class="article_list_link" @click="$router.back()">戻る</button>
   </div>
 </template>
 
@@ -43,59 +39,17 @@
           seo_title: '',
           meta_description: '',
         },
-        now_page: this.$route.params.id,
-        current_page: '',
-        first_page_url: '',
-        next_page_url: '',
       }
     },
 
-    computed: {
-      now_page_next: function () {
-        this.now_page++
-      }
-    },
-
-    async asyncData({ $axios,params }) {
+    async created(){
       const data = {
         params: {
-          tag: params.id,
+          tag: this.$route.params.id,
         }
       };
-      const tag_all = await $axios.$get(process.env.API + 'tag/',data );
-      return {tag_all}
-    },
-    methods: {
-      async next() {
-        const params = {
-          params: {
-            paginate: 4,
-            page: this.$route.params.id++
-          }
-        };
-        const res = await this.$axios.$get(process.env.API + 'paginate', params)
-        this.now_page = res.now_page
-        let resdata = res.data.map(res => {
-          return res
-        })
-        this.ArticleList = resdata
-        this.$router.push(this.$route.params.id)
-      },
-      async back() {
-        const params = {
-          params: {
-            paginate: 4,
-            page: this.$route.params.id--
-          }
-        };
-        const res = await this.$axios.$get(process.env.API + 'paginate', params)
-        this.now_page = res.now_page
-        let resdata = res.data.map(res => {
-          return res
-        })
-        this.ArticleList = resdata
-        this.$router.push(this.$route.params.id)
-      }
+      const tag_all = await this.$axios.$get(process.env.API + 'tag',data);
+      this.ArticleList = tag_all
     },
   }
 </script>
@@ -127,7 +81,7 @@
   }
 
   .article_list {
-    max-width: 1235px;
+    max-width: 920px;
     width: 100%;
     margin: 0 auto;
     transform: translateY(-20%);
@@ -136,11 +90,12 @@
     flex-direction: column;
     align-items: center;
     background-color: #F4F4F4;
+    flex-wrap: wrap;
     @include mq(llg) {
       background-color: transparent;
       padding: 0;
       flex-direction: row;
-      transform: translateY(-52%);
+      transform: translateY(-15%);
     }
   }
 
@@ -159,7 +114,7 @@
     @include mq(llg) {
       width: 30%;
       height: 390px;
-      margin-top: 0;
+      margin-top: 2%;
       margin-left: 2%;
     }
   }
@@ -173,9 +128,9 @@
     transform: scale(1.1);
   }
 
-  .article_list_item:first-child {
-    margin-left: 0;
-  }
+  /*.article_list_item:first-child {*/
+  /*  margin-left: 0;*/
+  /*}*/
 
   .article_list_item.active {
     margin-bottom: 0;
@@ -184,7 +139,7 @@
 
   .article_list_item_image {
     width: 100%;
-    object-fit: contain;
+    object-fit: cover;
   }
 
   .article_list_item_section {
