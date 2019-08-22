@@ -29,7 +29,8 @@
         <p class="submenu_title">カテゴリ</p>
         <div class="submenu_list_wrap">
           <ul class="submenu_list">
-            <li class="submenu_list_item" v-for="(item,index) in TagAll" :key="index"><a :href="'/category/' +item.tag">{{item.tag}}</a></li>
+            <li v-for="(item,index) in TagAll" :key="index"><a class="submenu_list_item" :href="'/category/' +item.tag" v-if="item.tag　!== null">{{item.tag}}</a>
+              <v-else></v-else></li>
           </ul>
           <p class="submenu_text"></p>
         </div>
@@ -437,6 +438,10 @@
     background-color: #f4f4f4;
   }
 
+  .submenu_list li{
+    list-style: none;
+  }
+
   .submenu_list_item {
     list-style: none;
     position: relative;
@@ -445,7 +450,7 @@
     max-width: none;
   }
 
-  .submenu_list_item a {
+  .submenu_list_item {
     padding: 12px 22px;
     color: #000;
     text-decoration: none;

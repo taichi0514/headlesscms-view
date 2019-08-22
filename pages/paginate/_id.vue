@@ -11,7 +11,11 @@
             <h3 class="article_list_item_section_title">{{item.title}}</h3>
             <p class="article_list_item_section_text">{{item.meta_description}}</p>
             <nuxt-link :to="'category/' + item.tag" class="article_list_item_category_link">
-              <span class="article_list_item_category">{{item.tag}}</span>
+              <div v-if="item.tag　=== null">
+              </div>
+              <div v-else>
+                <span class="article_list_item_category">{{item.tag}}</span>
+              </div>
               <p>{{now_page_next}}</p>
             </nuxt-link>
           </section>
@@ -256,7 +260,7 @@
     transform: translateX(-60%) translateY(-50%);
   }
 
-  .wrap_button{
+  .wrap_button {
     padding-top: 90px;
   }
 
