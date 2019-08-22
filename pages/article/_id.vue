@@ -527,4 +527,17 @@
     }
   }
 
+  .category {
+    text-decoration: none;
+    display: inline-block;
+    border: #f4f4f4 solid 1px;
+    border-radius: 16px;
+    padding: 4px 16px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    font-size: 0.75rem;
+    color: #000;
+    text-align: left;
+  }
+
 </style>
