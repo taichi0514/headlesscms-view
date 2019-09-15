@@ -66,6 +66,7 @@
   import marked from 'marked';
 
   export default {
+    middleware: 'authenticated',
     data() {
       return {
         ArticleData: {

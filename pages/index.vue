@@ -21,7 +21,7 @@
       Main,
       Store_description,
       Article_area
-    }
+    },
   }
 </script>
 

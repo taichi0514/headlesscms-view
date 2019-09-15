@@ -20,6 +20,7 @@
 
 <script>
   export default {
+    middleware: 'authenticated',
     head: {
       bodyAttrs: {
         class: 'management'

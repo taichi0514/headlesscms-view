@@ -3,7 +3,7 @@ import pkg from './package'
 require('dotenv').config();
 const {API} = process.env;
 const {CLIENTSECRET} = process.env;
-const {Api_auth} = process.env;
+const {AUTH} = process.env;
 
 export default {
   mode: 'ssr',
@@ -54,8 +54,6 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    // '~/plugins/axios.js',
-    { src: '~/plugins/localStorage.js', ssr: false }
   ],
 
   /*
@@ -83,7 +81,7 @@ export default {
   env: {
     API,
     CLIENTSECRET,
-    Api_auth
+    AUTH
   },
 
 

@@ -1,9 +1,10 @@
-import Vuex from 'vuex'
+const cookieparser = require('cookieparser')
 
 
 export const state = () => ({
+  token: null,
   auth: false,
-  auth_data:null,
+  auth_data: null,
   username: null,
   password: null,
 })
@@ -12,9 +13,7 @@ export const state = () => ({
 export const mutations = {
 
   setAuth(state, auth) {
-    state.auth = {loggedIn:"ture"},
-    state.auth_data = auth.token
-
+      state.auth = auth
   },
 
   setUser(state, user) {
@@ -27,3 +26,18 @@ export const mutations = {
 
 }
 
+
+export const actions = {
+  nuxtServerInit({commit}, {req}) {
+    let auth = null
+    if (req.headers.cookie) {
+      const parsed = cookieparser.parse(req.headers.cookie)
+      try {
+        auth = JSON.parse(parsed.auth)
+      } catch (err) {
+        // 有効なクッキーが見つからない場合
+      }
+    }
+    commit('setAuth', auth)
+  }
+}
