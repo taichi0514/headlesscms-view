@@ -2,7 +2,11 @@
   <div class="admin">
     <header>
       <button class="Articlepost" @click="ViewReturn">トップページに戻る</button>
-      <button class="Articlepost" @click="PostReturn">新規記事投稿</button>
+      <div>
+        <button class="Articlepost Articledelete" @click="Logout">ログアウト</button>
+        <button class="Articlepost" @click="PostReturn">新規記事投稿</button>
+      </div>
+
     </header>
       <div class="article_area">
         <div class="article_area_bg"></div>
@@ -33,6 +37,9 @@
 </template>
 
 <script>
+  const Cookie = require('js-cookie')
+  const cookieparser = require('cookieparser');
+
   export default {
     middleware: 'authenticated',
     head: {
@@ -68,6 +75,21 @@
       PostReturn: function () {
         this.$router.push('/admin/post')
       },
+      Logout: function () {
+        setTimeout(() => {
+          const postData = {
+            grant_type: "refresh_token",
+            client_id: "5",
+            client_secret: process.env.CLIENTSECRET,
+            scope: "*",
+            refresh_token: this.$store.state.auth.refresh_token,
+          };
+          this.$axios.get(process.env.API + "logout").then(() => {
+            Cookie.remove('auth')
+            this.$router.push("/");
+          })
+        }, 1000)
+      }
     }
   }
 </script>
@@ -281,6 +303,16 @@
   .time_updated_at{
     margin-top: 20px;
     display: block;
+  }
+
+  .Articlepost.Articledelete {
+    background-color: #e67a7a;
+    color: #fff;
+  }
+
+  .Articlepost.Articledelete:hover {
+    background-color: darken(#e67a7a, 30%);
+    color: #fff;
   }
 
 
