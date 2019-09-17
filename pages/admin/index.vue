@@ -8,20 +8,20 @@
         <div class="article_area_bg"></div>
         <div class="article_list">
           <article class="article_list_item active" v-for="(item,index) in ArticleList" :key="index">
-            <nuxt-link class="article_list_item_link" :to=" '/article/' +item.id">
+            <nuxt-link class="article_list_item_link" :to="'admin/edit/' + item.id">
               <img v-if="item.featured_image　=== null" src="//placehold.jp/290x160.png" alt=""
                    class="article_list_item_image">
               <img v-else :src="item.featured_image" alt="" class="article_list_item_image">
               <section class="article_list_item_section">
                 <h3 class="article_list_item_section_title">{{item.title}}</h3>
                 <p class="article_list_item_section_text">{{item.meta_description}}</p>
-                <nuxt-link :to="'/category/' + item.tag" class="article_list_item_category_link">
+                <div :to="'/category/' + item.tag" class="article_list_item_category_link">
                   <div v-if="item.tag　=== null">
                   </div>
                   <div v-else>
                     <span class="article_list_item_category">{{item.tag}}</span>
                   </div>
-                </nuxt-link>
+                </div>
                 <time class="time_updated_at">{{item.updated_at}}</time>
               </section>
             </nuxt-link>
