@@ -1,38 +1,38 @@
 <template>
   <div class="admin">
     <header>
-      <button class="Articlepost" @click="ViewReturn">トップページに戻る</button>
+      <button class="Articlepost" @click="ViewReturn" type="button">トップページに戻る</button>
       <div>
-        <button class="Articlepost Articledelete" @click="Logout">ログアウト</button>
-        <button class="Articlepost" @click="PostReturn">新規記事投稿</button>
+        <button class="Articlepost Articledelete" @click="Logout" type="button">ログアウト</button>
+        <button class="Articlepost" @click="PostReturn" type="button">新規記事投稿</button>
       </div>
 
     </header>
-      <div class="article_area">
-        <div class="article_area_bg"></div>
-        <div class="article_list">
-          <article class="article_list_item active" v-for="(item,index) in ArticleList" :key="index">
-            <nuxt-link class="article_list_item_link" :to="'admin/edit/' + item.id">
-              <img v-if="item.featured_image　=== null" src="//placehold.jp/290x160.png" alt=""
-                   class="article_list_item_image">
-              <img v-else :src="item.featured_image" alt="" class="article_list_item_image">
-              <section class="article_list_item_section">
-                <h3 class="article_list_item_section_title">{{item.title}}</h3>
-                <p class="article_list_item_section_text">{{item.meta_description}}</p>
-                <div :to="'/category/' + item.tag" class="article_list_item_category_link">
-                  <div v-if="item.tag　=== null">
-                  </div>
-                  <div v-else>
-                    <span class="article_list_item_category">{{item.tag}}</span>
-                  </div>
+    <div class="article_area">
+      <div class="article_area_bg"></div>
+      <div class="article_list">
+        <article class="article_list_item active" v-for="(item,index) in ArticleList" :key="index">
+          <nuxt-link class="article_list_item_link" :to="'admin/edit/' + item.id">
+            <img v-if="item.featured_image　=== null" src="//placehold.jp/290x160.png" alt=""
+                 class="article_list_item_image">
+            <img v-else :src="item.featured_image" alt="" class="article_list_item_image">
+            <section class="article_list_item_section">
+              <h3 class="article_list_item_section_title">{{item.title}}</h3>
+              <p class="article_list_item_section_text">{{item.meta_description}}</p>
+              <div :to="'/category/' + item.tag" class="article_list_item_category_link">
+                <div v-if="item.tag　=== null">
                 </div>
-                <time class="time_updated_at">{{item.updated_at}}</time>
-              </section>
-            </nuxt-link>
-          </article>
-        </div>
-        <button class="article_list_link" @click="$router.back()">戻る</button>
+                <div v-else>
+                  <span class="article_list_item_category">{{item.tag}}</span>
+                </div>
+              </div>
+              <time class="time_updated_at">{{item.updated_at}}</time>
+            </section>
+          </nuxt-link>
+        </article>
       </div>
+      <button class="article_list_link" @click="$router.back()">戻る</button>
+    </div>
   </div>
 </template>
 
@@ -76,19 +76,10 @@
         this.$router.push('/admin/post')
       },
       Logout: function () {
-        setTimeout(() => {
-          const postData = {
-            grant_type: "refresh_token",
-            client_id: "5",
-            client_secret: process.env.CLIENTSECRET,
-            scope: "*",
-            refresh_token: this.$store.state.auth.refresh_token,
-          };
-          this.$axios.get(process.env.API + "logout").then(() => {
-            Cookie.remove('auth')
-            this.$router.push("/");
-          })
-        }, 1000)
+        this.$axios.get(process.env.API + "logout");
+        Cookie.remove('auth');
+        this.$store.commit("removeAuth");
+        this.$router.push('/');
       }
     }
   }
@@ -300,7 +291,7 @@
     transform: translateX(-60%) translateY(-50%);
   }
 
-  .time_updated_at{
+  .time_updated_at {
     margin-top: 20px;
     display: block;
   }

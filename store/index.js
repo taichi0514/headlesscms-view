@@ -22,7 +22,10 @@ export const mutations = {
 
   setPass(state, pass) {
     state.password = pass.password
-  }
+  },
+  removeAuth(state) {
+    state.auth = null
+  },
 
 }
 
