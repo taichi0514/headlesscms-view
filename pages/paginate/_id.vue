@@ -10,7 +10,7 @@
           <section class="article_list_item_section">
             <h3 class="article_list_item_section_title">{{item.title}}</h3>
             <p class="article_list_item_section_text">{{item.meta_description}}</p>
-            <nuxt-link :to="'category/' + item.tag" class="article_list_item_category_link">
+            <nuxt-link :to="'/category/' + item.tag" class="article_list_item_category_link">
               <div v-if="item.tag　=== null">
               </div>
               <div v-else>
