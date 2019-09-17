@@ -16,6 +16,7 @@
   import Article_area from '~/components/top/Article_area.vue'
 
   export default {
+    middleware: 'notAuthenticated',
     components: {
       Header,
       Main,
