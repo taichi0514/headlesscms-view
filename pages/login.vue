@@ -12,7 +12,10 @@
         </div>
         <div class="button-panel">
           <button class="button" title="ログイン" v-on:click="Login" type="button" value="ログイン">ログイン</button>
+          <button class="Articlepost" @click="Return" type="button">戻る</button>
+
         </div>
+
       </form>
     </div>
   </main>
@@ -32,7 +35,7 @@
       };
     },
     methods: {
-      async Login() {
+      Login() {
         setTimeout(() => {
           const postData = {
             scope: "*",
@@ -54,6 +57,9 @@
             this.$router.push("/admin");
           })
         }, 1000)
+      },
+      Return() {
+        this.$router.push("/");
       }
     }
   };
@@ -160,6 +166,22 @@
 
   .form-footer a:hover {
     border-bottom: 1px dotted #8c8c8c;
+  }
+  .Articlepost {
+    appearance: none;
+    border: none;
+    background-color: #a9a9b3;
+    padding: 12px 14px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #fff;
+    transition: background-color 1s, color 1s;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .Articlepost:hover {
+    background-color: darken(#a9a9b3, 20%);
   }
 </style>
 
