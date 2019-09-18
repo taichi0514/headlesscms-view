@@ -16,18 +16,13 @@
   import Article_area from '~/components/top/Article_area.vue'
 
   export default {
-    // middleware: 'notAuthenticated',
+    middleware: 'notAuthenticated',
     components: {
       Header,
       Main,
       Store_description,
       Article_area
     },
-    created() {
-      if (this.$store.state.auth) {
-        this.$router.push('/admin')
-      }
-    }
   }
 </script>
 

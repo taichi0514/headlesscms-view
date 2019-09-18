@@ -31,10 +31,6 @@
         token: ""
       };
     },
-
-    created() {
-    },
-
     methods: {
       async Login() {
         setTimeout(() => {
@@ -54,6 +50,7 @@
             const auth = res.data
             this.$store.commit("setAuth", {auth});
             Cookie.set('auth', auth)
+            Cookie.set('auth_check', "ture")
             this.$router.push("/admin");
           })
         }, 1000)
@@ -65,15 +62,19 @@
 <style lang="scss" scoped>
   /* Fonts */
   @import url(https://fonts.googleapis.com/css?family=Open+Sans:400);
-
   /* fontawesome */
   @import url(http://weloveiconfonts.com/api/?family=fontawesome);
+
   [class*="fontawesome-"]:before {
     font-family: 'FontAwesome', sans-serif;
   }
 
   /* Simple Reset */
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
   /* body */
   body {

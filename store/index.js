@@ -13,7 +13,8 @@ export const state = () => ({
 export const mutations = {
 
   setAuth(state, auth) {
-      state.auth = auth
+    state.auth = auth
+    state.auth_check = true
   },
 
   setUser(state, user) {
@@ -25,6 +26,7 @@ export const mutations = {
   },
   removeAuth(state) {
     state.auth = null
+    state.auth_check = false
   },
 
 }
@@ -37,10 +39,12 @@ export const actions = {
       const parsed = cookieparser.parse(req.headers.cookie)
       try {
         auth = JSON.parse(parsed.auth)
+        commit('setAuth', auth)
       } catch (err) {
         // 有効なクッキーが見つからない場合
+        commit('removeAuth', auth)
       }
     }
-    commit('setAuth', auth)
   }
+
 }

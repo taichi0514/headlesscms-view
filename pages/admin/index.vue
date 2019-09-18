@@ -78,6 +78,7 @@
       Logout: function () {
         this.$axios.get(process.env.API + "logout");
         Cookie.remove('auth');
+        Cookie.remove('auth_check')
         this.$store.commit("removeAuth");
         this.$router.push('/');
       }
