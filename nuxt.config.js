@@ -100,10 +100,9 @@ export default {
   generate: {
     routes: function () {
       return axios.get(process.env.API + 'posts/all')
-        .then((res) => {
-          console.log(res.data)
-          const data = res.data
-          data.map((article) => {
+        .then(res => {
+          // console.log(res.data.data)
+          return res.data.data.map(article => {
             return {
               route: '/article/' + article.id,
               payload: {article}
