@@ -1,4 +1,5 @@
 import pkg from './package'
+import axios from 'axios'
 
 require('dotenv').config();
 const {API} = process.env;
@@ -6,7 +7,7 @@ const {CLIENTSECRET} = process.env;
 const {AUTH} = process.env;
 
 export default {
-  mode: 'ssr',
+  mode: 'universal',
 
   /*
   ** Headers of the page
@@ -53,8 +54,7 @@ export default {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [
-  ],
+  plugins: [],
 
   /*
   ** Nuxt.js modules
@@ -66,6 +66,7 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/style-resources',
     '@nuxtjs/auth',
+    'nuxt-client-init-module',
   ],
   // 読みませたいscssファイルを指定します。
   styleResources: {
@@ -93,6 +94,22 @@ export default {
     ** You can extend webpack config here
     */
     extend(config, ctx) {
+    }
+  },
+
+  generate: {
+    routes: function () {
+      return axios.get(process.env.API + 'posts/all')
+        .then((res) => {
+          console.log(res.data)
+          const data = res.data
+          data.map((article) => {
+            return {
+              route: '/article/' + article.id,
+              payload: {article}
+            }
+          })
+        })
     }
   }
 }
