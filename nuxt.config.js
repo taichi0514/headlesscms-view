@@ -98,17 +98,37 @@ export default {
   },
 
   generate: {
-    routes: function () {
-      return axios.get(process.env.API + 'posts/all')
-        .then(res => {
-          // console.log(res.data.data)
-          return res.data.data.map(article => {
-            return {
-              route: '/article/' + article.id,
-              payload: {article}
-            }
-          })
-        })
+    routes: async function () {
+      const params = {
+        params: {
+          paginate: 4,
+          page: 1
+        }
+      };
+      let paginate = await axios.get(process.env.API + 'paginate', params)
+      let paginate_res = paginate.data.data.map(paginate => {
+        return {
+          route: '/paginate/' + paginate.id,
+          payload: {paginate}
+        }
+      })
+      let article = await axios.get(process.env.API + 'posts/all')
+      let article_res = article.data.data.map(article => {
+        return {
+          route: '/article/' + article.id,
+          payload: {article}
+        }
+      })
+      // let tag = await axios.get(process.env.API + 'tag/all')
+      // let tag_res = tag.map(category => {
+      //   return {
+      //     route: '/category/' + category.tag,
+      //     payload: {tag}
+      //   }
+      // })
+      return Promise.all([paginate_res, article_res]).then(values => {
+        return [...values[0], values[1]]
+      })
     }
   }
 }
