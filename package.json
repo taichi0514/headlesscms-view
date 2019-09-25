@@ -14,6 +14,7 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
+    "heroku-postbuild": "npm run build",
     "test": "jest --setupFiles dotenv/config"
   },
   "dependencies": {
