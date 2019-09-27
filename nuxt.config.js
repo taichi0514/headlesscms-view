@@ -105,29 +105,30 @@ export default {
           page: 1
         }
       };
-      let paginate = await axios.get(process.env.API + 'paginate', params)
-      let paginate_res = paginate.data.data.map(paginate => {
+      const paginate = await axios.get(process.env.API + 'paginate', params)
+      const paginate_res = paginate.data.data.map(paginate => {
         return {
           route: '/paginate/' + paginate.id,
           payload: {paginate}
         }
       })
-      let article = await axios.get(process.env.API + 'posts/all')
-      let article_res = article.data.data.map(article => {
+      const article = await axios.get(process.env.API + 'posts/all')
+      const article_res = article.data.data.map(article => {
         return {
           route: '/article/' + article.id,
           payload: {article}
         }
       })
-      // let tag = await axios.get(process.env.API + 'tag/all')
-      // let tag_res = tag.map(category => {
-      //   return {
-      //     route: '/category/' + category.tag,
-      //     payload: {tag}
-      //   }
-      // })
-      return Promise.all([paginate_res, article_res]).then(values => {
-        return [...values[0], values[1]]
+      const admin_edit = await axios.get(process.env.API + 'posts/all')
+      const admin_edit_res = admin_edit.data.data.map(edit => {
+        return {
+          route: '/admin/edit/' + edit.id,
+          payload: {edit}
+        }
+      })
+
+      return Promise.all([paginate_res, article_res, admin_edit_res,]).then(values => {
+        return [...values[0], ...values[1], ...values[2],]
       })
     }
   }
