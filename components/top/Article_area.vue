@@ -1,5 +1,4 @@
 <template>
-
   <div class="article_area">
     <div class="article_area_bg"></div>
     <div class="article_list">
@@ -11,54 +10,25 @@
           <section class="article_list_item_section">
             <h3 class="article_list_item_section_title">{{item.title}}</h3>
             <p class="article_list_item_section_text">{{item.meta_description}}</p>
-            <nuxt-link :to="'category/' + item.tag" class="article_list_item_category_link">
-              <div v-if="item.tag　=== null">
-              </div>
-              <div v-else>
+            <div v-if="item.tag　=== null">
+            </div>
+            <div v-if="item.tag　!== null">
+              <nuxt-link :to="'category/' + item.tag" class="article_list_item_category_link">
                 <span class="article_list_item_category">{{item.tag}}</span>
-              </div>
-            </nuxt-link>
+              </nuxt-link>
+            </div>
           </section>
         </nuxt-link>
       </article>
     </div>
     <a href="/paginate/1" class="article_list_link">一覧をみる</a>
   </div>
-
 </template>
 
 
 <script>
   export default {
-    data() {
-      return {
-        ArticleList: {
-          id: '',
-          title: '',
-          body: '',
-          featured_image: '',
-          tag: '',
-          seo_title: '',
-          meta_description: '',
-        }
-      }
-    },
-
-    created() {
-      const params = {
-        params: {
-          paginate: 4,
-          page: 1
-        }
-      };
-      this.$axios.$get(process.env.API + 'paginate',params)
-        .then(res => {
-          let resdata = res.data.map(res => {
-            return res
-          })
-          this.ArticleList = resdata
-        })
-    },
+    props: ['ArticleList'],
   }
 </script>
 

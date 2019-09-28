@@ -126,9 +126,15 @@ export default {
           payload: {edit}
         }
       })
+      const article_area = await axios.get(process.env.API + 'posts/all')
+      const article_area_res = article_area.data.data.map(article_area_posts => {
+        return {
+          payload: {article_area_posts}
+        }
+      })
 
-      return Promise.all([paginate_res, article_res, admin_edit_res,]).then(values => {
-        return [...values[0], ...values[1], ...values[2],]
+      return Promise.all([paginate_res, article_res, admin_edit_res, article_area_res]).then(values => {
+        return [...values[0], ...values[1], ...values[2], ...values[3]]
       })
     }
   }
