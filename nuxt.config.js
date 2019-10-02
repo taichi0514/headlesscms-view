@@ -67,6 +67,7 @@ export default {
     '@nuxtjs/style-resources',
     '@nuxtjs/auth',
     'nuxt-client-init-module',
+    ['cookie-universal-nuxt', {parseJSON: false}]
   ],
   // 読みませたいscssファイルを指定します。
   styleResources: {

@@ -33,10 +33,10 @@ export const mutations = {
 
 
 export const actions = {
-  nuxtClientInit({commit}, {req}) {
+  nuxtClientInit({commit}, {app}) {
     let auth = null
     if (process.static) {
-      const parsed = cookieparser.parse(req.headers.cookie)
+      const parsed = cookieparser.parse(app.$cookies.get('auth'))
       try {
         auth = JSON.parse(parsed.auth)
         commit('setAuth', auth)
