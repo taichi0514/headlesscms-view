@@ -133,8 +133,17 @@ export default {
         }
       })
 
-      return Promise.all([paginate_res, article_res, admin_edit_res, article_area_res]).then(values => {
-        return [...values[0], ...values[1], ...values[2], ...values[3]]
+      const tag = await axios.get(process.env.API + 'tag/all');
+      const tag_res = tag.data.map(tags => {
+        return {
+          route: '/category/' + tags.tag,
+          payload: tags.tag
+        }
+      })
+
+
+      return Promise.all([paginate_res, article_res, admin_edit_res, article_area_res, tag_res]).then(values => {
+        return [...values[0], ...values[1], ...values[2], ...values[3], ...values[4]]
       })
     }
   }
