@@ -33,6 +33,7 @@ export const mutations = {
 
 
 export const actions = {
+
   nuxtClientInit({commit}, {app}) {
     let auth = null
     if (process.static) {
@@ -45,6 +46,22 @@ export const actions = {
         commit('removeAuth', auth)
       }
     }
+  },
+  nuxtServerInit({commit}, {req}) {
+    let auth = null
+    if (!process.static) {
+      if (req.headers.cookie) {
+        const parsed = cookieparser.parse(req.headers.cookie)
+        try {
+          auth = JSON.parse(parsed.auth)
+          commit('setAuth', auth)
+        } catch (err) {
+          // 有効なクッキーが見つからない場合
+          commit('removeAuth', auth)
+        }
+      }
+    }
   }
+
 
 }
