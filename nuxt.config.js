@@ -1,12 +1,14 @@
 import pkg from './package'
+import axios from 'axios'
 
 require('dotenv').config();
 const {API} = process.env;
 const {CLIENTSECRET} = process.env;
 const {AUTH} = process.env;
+const {MODE} = process.env;
 
 export default {
-  mode: 'ssr',
+  mode: process.env.MODE,
 
   /*
   ** Headers of the page
@@ -53,8 +55,7 @@ export default {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [
-  ],
+  plugins: [],
 
   /*
   ** Nuxt.js modules
@@ -66,6 +67,8 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/style-resources',
     '@nuxtjs/auth',
+    'nuxt-client-init-module',
+    ['cookie-universal-nuxt', {parseJSON: false}]
   ],
   // 読みませたいscssファイルを指定します。
   styleResources: {
@@ -81,7 +84,8 @@ export default {
   env: {
     API,
     CLIENTSECRET,
-    AUTH
+    AUTH,
+    MODE
   },
 
 
@@ -93,6 +97,57 @@ export default {
     ** You can extend webpack config here
     */
     extend(config, ctx) {
+    }
+  },
+
+  generate: {
+    routes: async function () {
+      const params = {
+        params: {
+          paginate: 4,
+          page: 1
+        }
+      };
+      const paginate = await axios.get(process.env.API + 'paginate', params)
+      const paginate_res = paginate.data.data.map(paginate => {
+        return {
+          route: '/paginate/' + paginate.id,
+          payload: {paginate}
+        }
+      })
+      const article = await axios.get(process.env.API + 'posts/all')
+      const article_res = article.data.data.map(article => {
+        return {
+          route: '/article/' + article.id,
+          payload: {article}
+        }
+      })
+      const admin_edit = await axios.get(process.env.API + 'posts/all')
+      const admin_edit_res = admin_edit.data.data.map(edit => {
+        return {
+          route: '/admin/edit/' + edit.id,
+          payload: {edit}
+        }
+      })
+      const article_area = await axios.get(process.env.API + 'posts/all')
+      const article_area_res = article_area.data.data.map(article_area_posts => {
+        return {
+          payload: {article_area_posts}
+        }
+      })
+
+      const tag = await axios.get(process.env.API + 'tag/all');
+      const tag_res = tag.data.map(tags => {
+        return {
+          route: '/category/' + tags.tag,
+          payload: tags.tag
+        }
+      })
+
+
+      return Promise.all([paginate_res, article_res, admin_edit_res, article_area_res, tag_res]).then(values => {
+        return [...values[0], ...values[1], ...values[2], ...values[3], ...values[4]]
+      })
     }
   }
 }

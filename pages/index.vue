@@ -4,7 +4,7 @@
     <Main/>
     <div class="contents">
       <Store_description/>
-      <Article_area/>
+      <Article_area v-bind:ArticleList="ArticleList"/>
     </div>
   </div>
 </template>
@@ -22,6 +22,29 @@
       Main,
       Store_description,
       Article_area
+    },
+    async asyncData({$axios}) {
+      const hoge = {
+        params: {
+          paginate: 4,
+          page: 1
+        }
+      };
+      const article_area_posts = await $axios.$get(process.env.API + 'paginate', hoge)
+      return { ArticleList: article_area_posts.data }
+    },
+    data() {
+      return {
+        ArticleList2: {
+          id: '',
+          title: '',
+          body: '',
+          featured_image: '',
+          tag: '',
+          seo_title: '',
+          meta_description: '',
+        }
+      }
     },
   }
 </script>

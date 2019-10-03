@@ -42,15 +42,27 @@
       }
     },
 
-    async created(){
-      const data = {
-        params: {
-          tag: this.$route.params.id,
-        }
-      };
-      const tag_all = await this.$axios.$get(process.env.API + 'tag',data);
-      this.ArticleList = tag_all
-    },
+    async asyncData({$axios, tags, route}) {
+      if (tags) {
+        const data = {
+          params: {
+            tag: tags.tag,
+          }
+        };
+        const tag_all = await $axios.$get(process.env.API + 'tag', data);
+        return {ArticleList: tag_all}
+      }
+      else if(!tags)
+      {
+        const data = {
+          params: {
+            tag: route.params.id,
+          }
+        };
+        const tag_all = await $axios.$get(process.env.API + 'tag', data);
+        return {ArticleList: tag_all}
+      }
+    }
   }
 </script>
 
