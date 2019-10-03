@@ -5,9 +5,10 @@ require('dotenv').config();
 const {API} = process.env;
 const {CLIENTSECRET} = process.env;
 const {AUTH} = process.env;
+const {MODE} = process.env;
 
 export default {
-  mode: 'universal',
+  mode: process.env.MODE,
 
   /*
   ** Headers of the page
@@ -83,7 +84,8 @@ export default {
   env: {
     API,
     CLIENTSECRET,
-    AUTH
+    AUTH,
+    MODE
   },
 
 
